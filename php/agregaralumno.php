@@ -1,7 +1,10 @@
 <?php
+include 'php/conexion.php';
+
+
 if(!empty($_POST)){
 	$conexion=(mysqli_connect("localhost","root","entrar"));
-    mysqli_select_db($conexion,'citas') or die ("no se encuentra la bd");	
+    mysqli_select_db($conexion,citas) or die ("no se encuentra la bd");	
 	$nombreusuario=$_POST['nombreusuario'];
 	$dni=$_POST['dni'];
 	$nombre=$_POST['nombre'];
