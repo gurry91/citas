@@ -1,10 +1,9 @@
 <?php
-include './conexion.php';
-
+include './credenciales.php';
 
 if(!empty($_POST)){
-	$conexion=(mysqli_connect("localhost","root","entrar"));
-    mysqli_select_db($conexion,citas) or die ("no se encuentra la bd");	
+	$conexion=(mysqli_connect($servidor,$server_admin,$server_pass));
+    mysqli_select_db($conexion,$database) or die ("no se encuentra la bd");	
 	$nombreusuario=$_POST['nombreusuario'];
 	$dni=$_POST['dni'];
 	$nombre=$_POST['nombre'];

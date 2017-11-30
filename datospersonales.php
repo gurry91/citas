@@ -19,6 +19,9 @@
 				<?php
 					session_start();
 					echo $_SESSION['nombre'];
+					
+					 
+					 
 					?>
 				</a>
 			</div>		
@@ -44,6 +47,7 @@
 					<th>DNI</th>	
 					<th>NOMBRE</th>	
 					<th>APELLIDOS</th>		
+					<th></th>	
 					<th>DIRECCION</th>	
 					<th>CORREO</th>	
 					<th>TELEFONO</th>	
@@ -55,15 +59,18 @@
 			<tbody>
 				<?php
 				     require('php/conexion.php');
-				     $result=mysqli_query($conexion,'SELECT n_usuario FROM usuarios where rol="alumno" and n_usuario="Ismail"');				    
+					 
+					 $id=$_SESSION['nombre'];
+					
+				     $result=mysqli_query($conexion,"SELECT n_usuario FROM usuarios where rol='alumno' and n_usuario='$id'");				    
 				     while ($usuarios=mysqli_fetch_array($result)){
 						 $id=$usuarios['n_usuario'];
 					 //////////////////////////////////////
-					 $result2=mysqli_query($conexion,"SELECT * FROM datosusuario where id_usuario='$id'");
+					 $result2=mysqli_query($conexion,"SELECT * FROM usuarios where n_usuario='$id'");
 					 $dato=mysqli_fetch_array($result2);
 					 //////////////////////////////////////
 					 echo "<tr><td id='id:$id' class='cam_editable'>".$usuarios['n_usuario']."</td>";
-					 echo "<td id='cedula:$id' class='cam_editable' contenteditable='true'>".$dato['dni']."</td>";
+					 echo "<td id='dni:$id' class='cam_editable' contenteditable='true'>".$dato['dni']."</td>";
 				     echo "<td id='nombre:$id' class='cam_editable' contenteditable='true'>".$dato['nombre']."</td>";
 					 echo "<td id='apellido:$id' class='cam_editable' contenteditable='true'>".$dato['apellido']."</td>";
 					 echo "<td id='apellido2:$id' class='cam_editable' contenteditable='true'>".$dato['apellido2']."</td>";

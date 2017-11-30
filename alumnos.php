@@ -63,7 +63,7 @@
 				     while ($usuarios=mysqli_fetch_array($result)){
 						 $id=$usuarios['n_usuario'];
 					 //////////////////////////////////////
-					 $result2=mysqli_query($conexion,"SELECT * FROM datosusuario where id_usuario='$id'");
+					 $result2=mysqli_query($conexion,"SELECT * FROM usuarios where n_usuario='$id'");
 					 $dato=mysqli_fetch_array($result2);
 					 //////////////////////////////////////
 					 echo "<tr><td id='id:$id' class='cam_editable'>".$usuarios['n_usuario']."</td>";
