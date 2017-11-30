@@ -23,9 +23,7 @@ if(!empty($_POST)){
 	$busquedausuario=mysqli_fetch_array($resultadousuario);
 //	echo $busquedausuario;	
 	if(empty($busquedadni)&&empty($busquedausuario)){		
-		$insertar="INSERT INTO usuarios (n_usuario, password, rol) VALUES ('$nombreusuario', '$password', '$rol')";
-        mysqli_query($conexion,$insertar) or die ("NO se pudo insertar usuario");
-		$insertar="INSERT INTO datosusuario (id_usuario, dni, nombre, apellido, apellido2, direccion, correo, telefono, fecha, sexo, cita) VALUES ('$nombreusuario', '$dni', '$nombre', '$apellido', '$apellido2', '$direccion', '$correo', '$telefono','$fecha', '$sexo', 0)";
+		$insertar="INSERT INTO `citas`.`usuarios` (`id`, `n_usuario`, `password`, `rol`, `nombre`, `apellido`, `apellido2`, `correo`, `direccion`, `fecha`, `dni`, `sexo`, `telefono`) VALUES (NULL, '$nombreusuario', '$password', 'alumno', '$nombre', '$apellido', '$apellido2', '$correo', '$direccion', '$fecha', '$dni', '$sexo', '$telefono')";
         mysqli_query($conexion,$insertar) or die ("NO se pudo insertar datos personales");
         mysqli_close($conexion);
 			
