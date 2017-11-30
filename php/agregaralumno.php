@@ -1,5 +1,5 @@
 <?php
-include 'php/conexion.php';
+include './conexion.php';
 
 
 if(!empty($_POST)){
