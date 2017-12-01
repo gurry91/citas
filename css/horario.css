@@ -1,0 +1,31 @@
+#calendarTable, #hoursTable{
+	text-align: center;
+	margin: auto;
+}
+#calendarTable th, #calendarTable td, #hoursTable th, #hoursTable td{
+	text-align: center;
+	width: 80px;
+}
+
+#calendarTable td, #hoursTable td{
+	padding: 10px 0;
+}
+
+#calendarMonth{
+	cursor: default;
+	color: black;
+}
+
+#calendarMonthWrapper *{
+	font-weight: bold;
+}
+
+#hoursTable{
+	margin-top: 40px; 
+	margin-bottom: 40px;
+}
+
+#hoursTable caption{
+	border-top: 1px solid;
+	border-color: rgb(200, 200, 200);
+}

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/horario.css" rel="stylesheet">
+	<title>Mi horario</title>
+</head>
+<body>
+   <div class="container">
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#miMenu">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a href="frmalumno.php" class="navbar-brand">Bienvenido usuario 
+				<?php
+					session_start();
+					echo $_SESSION['nombre'];
+					?>
+				</a>
+			</div>		
+			<div class="collapse navbar-collapse" id="miMenu">
+				<ul class="nav navbar-nav">
+					<li><a href="datospersonales.php">Datos personales</a></li>
+					<li class="active"><a href="horarios.php">Horarios</a></li>	
+					<li><a onclick="cambiar();" href="#">Cambiar contraseña</a></li>
+					<li><a href="php/cerrarsesion.php"><span class="label label-danger">CERRAR SESION </span></a></li>								
+				</ul>
+			</div>
+		</div>
+	</nav>
+</div>
+<div class="container">
+<div class="panel panel-default">
+    <div class="panel-heading">HORARIO</div>
+	<div class="table-responsive">
+		<div style="text-align: center;margin: 40px auto; width: 480px">
+			<label>Elige Profesor: </label>
+            <div class="form-group" style="display: inline-block;min-width: 150px">
+              <select name='sexo' class='form-control'>
+				  <option value="Femenino">Prof1</option>
+				  <option value="Masculino">Prof2</option>					  
+		      </select>
+            </div>
+
+            <button class="btn btn-success" disabled style="float: right;">Pedir Cita</button>
+		</div>
+		<table id="calendarTable" class="table-condensed table-bordered table-striped">
+                <thead>
+                    <tr>
+                      <th colspan="7">
+                        <span id="calendarMonthWrapper" class="btn-group">
+                            <button class="btn btn-primary"><</button>
+                        	<a id="calendarMonth" class="btn disabled">February 2012</a>
+                        	<button class="btn btn-primary">></button>
+                        </span>
+                      </th>
+                    </tr>
+                    
+                    <tr>
+                        <th>Lunes</th>
+                        <th>Martes</th>
+                        <th>Miercoles</th>
+                        <th>Jueves</th>
+                        <th>Viernes</th>
+                        <th>Sábado</th>
+                        <th>Domingo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td >29</td>
+                        <td >30</td>
+                        <td >31</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>6</td>
+                        <td>7</td>
+                        <td>8</td>
+                        <td>9</td>
+                        <td>10</td>
+                        <td>11</td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>13</td>
+                        <td>14</td>
+                        <td>15</td>
+                        <td>16</td>
+                        <td>17</td>
+                        <td>18</td>
+                    </tr>
+                    <tr>
+                        <td>19</td>
+                        <td class="btn btn-success"><strong>20</strong></td>
+                        <td>21</td>
+                        <td>22</td>
+                        <td>23</td>
+                        <td>24</td>
+                        <td>25</td>
+                    </tr>
+                    <tr>
+                        <td>26</td>
+                        <td>27</td>
+                        <td>28</td>
+                        <td>29</td>
+                        <td >1</td>
+                        <td >2</td>
+                        <td >3</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table id="hoursTable" class="table-condensed table-bordered table-striped">
+            	<caption>Elige una hora:</caption>
+                <tbody>
+                    <tr>
+                        <td>7:20</td>
+                         <td>7:20</td>
+                          <td>7:20</td>
+                          <td>7:20</td>
+                        <td>7:20</td>
+                        <td>7:20</td>
+						<td>7:20</td>
+
+                    </tr>
+                    <tr>
+                    	<td>7:20</td>
+                         <td>7:20</td>
+                          <td>7:20</td>
+                          <td>7:20</td>
+                        <td>7:20</td>
+                        <td>7:20</td>
+						<td class="btn btn-success">7:20</td>
+ 
+                    </tr>
+                  
+                </tbody>
+            </table>
+	</div>
+	</div>
+	
+<!--//////////////////////////////////////////////////////////////////////////////////////////////////-->
+	</div>
+<!--//////////////////////////////////////////////////-->
+ <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">Cambiar Contraseña</h4>
+            </div>
+            <form role="form"  id= "frmcambiar" name="frmcambiar" onsubmit="cambiarpassword(); return false">
+              <div class="col-lg-12">               
+
+                <div class="form-group">
+                  <label>Contraseña Actual</label>
+                  <input  name="password0" id="p" class="form-control" type="password"required>
+                </div>
+                <div class="form-group">
+                  <label>Nueva contraseña</label>
+                  <input  name="password1" id="p3" class="form-control" type="password"required>
+                </div>
+                
+                <div class="form-group">
+                  <label>Confirmar contraseña</label>
+                  <input  name="password2" id="p4" class="form-control" type="password" required>
+                </div> 
+                 <button type="submit" class="btn btn-primary btn-lg" button='agregar'>
+                  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Cambiar
+                </button> 
+              </div>
+            </form>
+            <div class="modal-footer">
+            </div>
+          </div>
+        </div>
+      </div>
+<!--//////////////////////////////////////////////////-->	
+<script src="js/jquery-2.2.3.min.js"></script>
+<script type="text/javascript" src="js/maincita.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/change.js"></script>
+<script type="text/javascript">        
+	function cambiar(){
+          $('#modal2').modal('show');
+
+        }
+    </script>
+<!--//////////////////////////////////////////////////////////////////////////////////////////////////-->
+</body>
