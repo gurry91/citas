@@ -34,68 +34,68 @@
             <form role="form"  id= "frmalumno" name="frmalumno" onsubmit="Registraralumno(); return false">
               <div class="col-lg-12">               
 
+                <div id="instructionBox">* Campo obligatorio</div>
                 <div class="form-group">
-                  <label>Nombre de usuario</label>
+                  <label>* Nombre de usuario</label>
                   <input  name="nombreusuario" class="form-control" required>
                 </div>
                 
-                 <div class="form-group">
-                  <label>Dni</label>
-                  <input  name="dni" class="form-control" required>
-                </div>
-                 
                 <div class="form-group">
-                  <label>Nombre</label>
+                  <label>* Nombre</label>
                   <input  name="nombre" class="form-control" required>
                 </div>
                  
                 <div class="form-group">
-                  <label>Primer Apellido</label>
+                  <label>* Primer Apellido</label>
                   <input  name="apellido" class="form-control" required>
                 </div>
 				
-				<div class="form-group">
-                  <label>Segundo Apellido</label>
+				        <div class="form-group">
+                  <label>* Segundo Apellido</label>
                   <input  name="apellido2" class="form-control" required>
                 </div>
-                                
+                  
+                <div class="form-group">
+                  <label>Dni</label>
+                  <input  name="dni" class="form-control">
+                </div>
+
                 <div class="form-group">
                   <label>Direccion</label>
-                  <input  name="direccion"  class="form-control" required>
+                  <input  name="direccion"  class="form-control">
                 </div>
                  
                  <div class="form-group">
                   <label>Correo</label>
-                  <input  name="correo" type="email"  class="form-control" required>
+                  <input name="correo" type="email"  class="form-control">
                 </div>
                 
                  <div class="form-group">
                   <label>Telefono</label>
-                  <input  name="telefono" type="number"  class="form-control" required>
+                  <input name="telefono" type="number"  class="form-control">
                 </div>
                  
                 <div class="form-group">
-                  <label>Fecha de nacimiento</label>
-                  <input  name="fecha" type="date"  class="form-control" required>
+                  <label>* Fecha de nacimiento</label>
+                  <input  name="fecha" type="date" class="form-control" required>
                 </div>
                  
-                 <div class="form-group">
+                <div class="form-group">
                   <label>Sexo</label>
                   <select name='sexo' class='form-control'>
-					  <option value="Femenino">Femenino</option>
-					  <option value="Masculino">Masculino</option>					  
-				  </select>
-                 </div>
-                               
+        					  <option value="Femenino">Femenino</option>
+        					  <option value="Masculino">Masculino</option>					  
+      				    </select>
+                </div>
 
                 <div class="form-group">
-                  <label>password</label>
+                  <label>* Contraseña</label>
                   <input  name="password" id="p1" type="password" class="form-control" required>
                 </div>
                 
                 <div class="form-group">
-                  <label>repita password</label>
-                  <input  name="password2" id="p2" type="password" class="form-control" required>
+                  <label>* Repita contraseña</label>
+                  <input name="password2" id="p2" type="password" class="form-control" required>
                 </div>                         
                 
                 <button type="submit" class="btn btn-primary btn-lg" button='agregar'>

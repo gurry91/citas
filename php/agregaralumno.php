@@ -1,5 +1,6 @@
 <?php
 include './credenciales.php';
+include '../constantes.php';
 
 if(!empty($_POST)){
 	$conexion=(mysqli_connect($servidor,$server_admin,$server_pass));
@@ -15,28 +16,19 @@ if(!empty($_POST)){
 	$fecha=$_POST['fecha'];
 	$sexo=$_POST['sexo'];
 	$password=$_POST['password'];	
-	$rol='alumno';
-	$consultardni="SELECT * FROM datosusuario where dni='$dni'";
-	$resultadodni=mysqli_query($conexion,$consultardni);
-	$busquedadni=mysqli_fetch_array($resultadodni);
-//	echo $busquedadni;
-	$consultarusuario="SELECT * FROM usuarios where nombre='$nombreusuario'";
+	$rol=ROL_ALUMNO;
+	$consultarusuario="SELECT 1 FROM usuarios where n_usuario='$nombreusuario'";
 	$resultadousuario=mysqli_query($conexion,$consultarusuario);	
 	$busquedausuario=mysqli_fetch_array($resultadousuario);
-//	echo $busquedausuario;	
-	if(empty($busquedadni)&&empty($busquedausuario)){		
-		$insertar="INSERT INTO `citas`.`usuarios` (`id`, `n_usuario`, `password`, `rol`, `nombre`, `apellido`, `apellido2`, `correo`, `direccion`, `fecha`, `dni`, `sexo`, `telefono`) VALUES (NULL, '$nombreusuario', '$password', 'alumno', '$nombre', '$apellido', '$apellido2', '$correo', '$direccion', '$fecha', '$dni', '$sexo', '$telefono')";
+
+	if(empty($busquedausuario)){		
+		$insertar="INSERT INTO usuarios ( `n_usuario`, `password`, `rol`, `nombre`, `apellido`, `apellido2`, `correo`, `direccion`, `fecha`, `dni`, `sexo`, `telefono`) VALUES ('$nombreusuario', '$password', (SELECT id FROM roles WHERE descripcion = '$rol'), '$nombre', '$apellido', '$apellido2', '$correo', '$direccion', '$fecha', '$dni', '$sexo', '$telefono')";
         mysqli_query($conexion,$insertar) or die ("NO se pudo insertar datos personales");
         mysqli_close($conexion);
 			
-			echo"Registro completado de manera correcta";
-		}else{
-		    if (!empty($busquedadni)){
-				echo "DNI ya esta registrado";
-			}
-		    if (!empty($busquedausuario)){
-				echo "el nombre de usuario ya existe";
-			}	
-		}
+		echo "Registro completado de manera correcta";
+	}else if (!empty($busquedausuario)){
+		echo "El nombre de usuario ya existe";
+	}
 }
 ?>
