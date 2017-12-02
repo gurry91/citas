@@ -62,7 +62,7 @@
 					 
 					 $id=$_SESSION['nombre'];
 					
-				     $result=mysqli_query($conexion,"SELECT n_usuario FROM usuarios where rol='alumno' and n_usuario='$id'");				    
+				     $result=mysqli_query($conexion,"SELECT n_usuario FROM usuarios where n_usuario='$id'");				    
 				     while ($usuarios=mysqli_fetch_array($result)){
 						 $id=$usuarios['n_usuario'];
 					 //////////////////////////////////////
