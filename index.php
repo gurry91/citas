@@ -12,7 +12,7 @@
 	<legend>Iniciar sesión</legend>
 	<input type="text" placeholder="usuario" name="usuario" required>
 	<input type="password" placeholder="contraseña" name="password" required>
-	<input type="submit">	
+	<input type="submit" value="Iniciar sesión">	
 </form>
 <!--//////////////////////////////////////////////////////////////////////////////////////////////////-->
 	<p></p>
@@ -78,15 +78,14 @@
                 <div class="form-group">
                   <label>* Fecha de nacimiento</label>
                   <input  name="fecha" type="date" class="form-control" required>
+
                 </div>
                  
                 <div class="form-group">
                   <label>Sexo</label>
-                  <select name='sexo' class='form-control'>
-        					  <option value="Femenino">Femenino</option>
-        					  <option value="Masculino">Masculino</option>					  
-      				    </select>
-                </div>
+                   <br/>Hombre <input name='sexo' type="radio" value="Hombre"class="form-control" required> 
+                   <br/> Mujer <input name='sexo' type="radio" value="Mujer"class="form-control" required>				  
+      				  </div>
 
                 <div class="form-group">
                   <label>* Contraseña</label>

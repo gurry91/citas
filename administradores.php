@@ -49,7 +49,7 @@
 			<tbody>
 				<?php
 				     require('php/conexion.php');
-				     $result=mysqli_query($conexion,'SELECT n_usuario FROM usuarios where rol="admin"');
+				     $result=mysqli_query($conexion,'SELECT n_usuario FROM usuarios where rol="3"');
 				     while ($usuarios=mysqli_fetch_array($result)){
 						 $nombre=$usuarios['nombre'];
 					 echo "<tr><td id='id:$nombre' class='cam_editable'>".$usuarios['n_usuario']."</td>"; 

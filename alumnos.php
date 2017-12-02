@@ -24,9 +24,9 @@
 			</div>		
 			<div class="collapse navbar-collapse" id="miMenu">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="administradores.php">Administradores</a></li>
+					<li><a href="administradores.php">Administradores</a></li>
 					<li><a href="profesores.php">Profesores</a></li>					
-					<li><a href="alumnos.php">Alumnos</a></li>	
+					<li class="active"><a href="alumnos.php">Alumnos</a></li>	
 					<li><a href="citas.php">Citas</a></li>	
 					<li><a onclick="cambiar();" href="#">Cambiar contraseña</a></li>
 					<li><a href="php/cerrarsesion.php"><span class="label label-danger">CERRAR SESION </span></a></li>									
@@ -59,7 +59,7 @@
 			<tbody>
 				<?php
 				     require('php/conexion.php');
-				     $result=mysqli_query($conexion,'SELECT n_usuario FROM usuarios where rol="alumno"');				    
+				     $result=mysqli_query($conexion,'SELECT n_usuario FROM usuarios where rol="3"');				    
 				     while ($usuarios=mysqli_fetch_array($result)){
 						 $id=$usuarios['n_usuario'];
 					 //////////////////////////////////////
