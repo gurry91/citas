@@ -1,3 +1,8 @@
+<?php 
+	#include 'php/profesorUtils.php';
+	include 'php/htmlUtils.php';
+ ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,10 +46,9 @@
 		<div style="text-align: center;margin: 40px auto; width: 480px">
 			<label>Elige Profesor: </label>
             <div class="form-group" style="display: inline-block;min-width: 150px">
-              <select name='sexo' class='form-control'>
-				  <option value="Femenino">Prof1</option>
-				  <option value="Masculino">Prof2</option>					  
-		      </select>
+            	<?php 
+            		generarCombo(obtenerProfesores(), array("id" => "profesor", "class" => "form-control"));
+            	 ?>
             </div>
 
             <button class="btn btn-success" disabled style="float: right;">Pedir Cita</button>
