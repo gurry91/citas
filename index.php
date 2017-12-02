@@ -12,7 +12,7 @@
 	<legend>Iniciar sesión</legend>
 	<input type="text" placeholder="usuario" name="usuario" required>
 	<input type="password" placeholder="contraseña" name="password" required>
-	<input type="submit">	
+	<input type="submit" value="Iniciar sesión">	
 </form>
 <!--//////////////////////////////////////////////////////////////////////////////////////////////////-->
 	<p></p>
