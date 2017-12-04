@@ -72,7 +72,7 @@
                 
                  <div class="form-group">
                   <label>Teléfono</label>
-                  <input name="telefono" type="text" placeholder="+34999999999" class="form-control" pattern="[+/d{2}]?[/d{9}]">
+                  <input name="telefono" type="text" placeholder="+34999999999" class="form-control" pattern="([+]\d{2})?\d{9}">
                 </div>
                  
                 <div class="form-group">
