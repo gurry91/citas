@@ -84,3 +84,16 @@ input[type=submit]:hover{
 	font-style: oblique;
 	margin: 10px 0px;
 }
+
+input[type="radio"]{
+	width: auto;
+	height: auto;
+	display: inline-block;
+}
+
+.sexoFormElement span{
+	width: 55px;
+	display: inline-block;
+	text-align: left;
+	margin-bottom: 5px;
+}

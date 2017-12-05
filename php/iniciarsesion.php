@@ -7,13 +7,16 @@ if(!empty($_POST)){
     mysqli_select_db($conexion,'citas') or die ("no se encuentra la bd");	
 	$user=$_POST['usuario'];
 	$pass=$_POST["password"];
-	$sql="SELECT usuarios.nombre, usuarios.password, roles.descripcion rol FROM usuarios
+	$sql="SELECT usuarios.id,usuarios.nombre, usuarios.password, roles.descripcion rol FROM usuarios
 	INNER JOIN roles ON (roles.id = usuarios.rol) WHERE usuarios.n_usuario='$user'";
+
 	$consulta=mysqli_query($conexion,$sql)or die(mysqli_error());
 	if($fila=mysqli_fetch_array($consulta,MYSQL_ASSOC)){
 		if($pass==$fila['password']){
 			$_SESSION['nombre']=$user;
 			$_SESSION['rol']=$fila['rol'];
+			$_SESSION['usuario'] = $fila['id'];
+
 			echo $fila['rol'];
 		}else{
 			session_destroy();

@@ -1,22 +1,31 @@
 <?php
+include $_SERVER['DOCUMENT_ROOT'] . '/citas/php/credenciales.php';
+
 if(!empty($_POST)){
-	$enlace=mysql_connect('localhost','root','entrar');
-	if (!$enlace){
-		die('no se pudo conectar: '.mysql_error());
+	session_start();
+	$alumno = $_SESSION["usuario"];
+	$horario = $_POST["horario"];
+	$day = $_POST["day"];
+	$month = $_POST["month"];
+	$year = $_POST["year"];
+
+	error_log($month);
+
+	$fecha = date("Y-m-d", mktime(0,0,0,$month,$day,$year));
+
+	error_log($fecha);
+
+	$conexion = mysqli_connect($servidor,$server_admin,$server_pass, $database) or die ("no se encuentra la bd");
+
+	if (mysqli_connect_errno()) {
+		die("Falló la conexión: " . mysqli_connect_error());
 	}
-	mysql_select_db('citas');	
-	foreach($_POST as $field_name=>$val){
-		$field_id=strip_tags(trim($field_name));
-		$val=strip_tags(trim(mysql_real_escape_string($val)));
-		$split_data=explode(':',$field_id);
-		$field_name=$split_data[0];
-		if(!empty($field_name)&&!empty($val)){
-			mysql_query("UPDATE datosusuario set cita='$field_name' where id_usuario='$val'") or mysql_error();
-			mysql_query("UPDATE horarios set alumno='$val' where id_horario='$field_name'") or mysql_error();
-			echo"true";
-		}else{
-			echo"false";
-		}
-	}
+
+	$sql = sprintf("INSERT INTO citas (id_horario, id_usuario, fecha) VALUES (%d,%d,'%s')", $horario, $alumno, $fecha);
+	error_log($sql);
+	mysqli_query($conexion,$sql) or die(mysqli_error($conexion));
+	mysqli_close($conexion);
+
+	die("Se ha guardado las cita");
 }
 ?>

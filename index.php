@@ -71,8 +71,8 @@
                 </div>
                 
                  <div class="form-group">
-                  <label>Telefono</label>
-                  <input name="telefono" type="number"  class="form-control">
+                  <label>Teléfono</label>
+                  <input name="telefono" type="text" placeholder="+34999999999" class="form-control" pattern="[+/d{2}]?[/d{9}]">
                 </div>
                  
                 <div class="form-group">
@@ -83,8 +83,13 @@
                  
                 <div class="form-group">
                   <label>Sexo</label>
-                   <br/>Hombre <input name='sexo' type="radio" value="Hombre"class="form-control" required> 
-                   <br/> Mujer <input name='sexo' type="radio" value="Mujer"class="form-control" required>				  
+                  <br>
+                  <div class="sexoFormElement">
+                   <input name='sexo' type="radio" value="Hombre" class="form-control">  <span>Hombre</span>
+                  </div>
+                  <div class="sexoFormElement">
+                   <input name='sexo' type="radio" value="Mujer" class="form-control"> <span>Mujer</span>			  
+                  </div>
       				  </div>
 
                 <div class="form-group">

@@ -1,6 +1,7 @@
 <?php 
-	#include 'php/profesorUtils.php';
+	include 'php/profesorUtils.php';
 	include 'php/htmlUtils.php';
+    include 'php/calendarUtils.php';
  ?>
 
 <!DOCTYPE html>
@@ -47,20 +48,24 @@
 			<label>Elige Profesor: </label>
             <div class="form-group" style="display: inline-block;min-width: 150px">
             	<?php 
-            		generarCombo(obtenerProfesores(), array("id" => "profesor", "class" => "form-control"));
+                    $profesores = obtenerProfesores();
+                    $atributosComboProfesores = array("id" => "profesor", "class" => "form-control");
+            		echo generarComboDesdeAssocArray($profesores ,$atributosComboProfesores, "id", "nombre", true);
             	 ?>
             </div>
 
-            <button class="btn btn-success" disabled style="float: right;">Pedir Cita</button>
+            <button id="btnCita" class="btn btn-success" disabled style="float: right;">Pedir Cita</button>
 		</div>
+
+
 		<table id="calendarTable" class="table-condensed table-bordered table-striped">
                 <thead>
                     <tr>
                       <th colspan="7">
                         <span id="calendarMonthWrapper" class="btn-group">
-                            <button class="btn btn-primary"><</button>
-                        	<a id="calendarMonth" class="btn disabled">February 2012</a>
-                        	<button class="btn btn-primary">></button>
+                            <button id="previousMonthButton" class="btn btn-primary"><</button>
+                        	<a id="calendarMonth" class="btn disabled"></a>
+                        	<button id="nextMonthButton" class="btn btn-primary hidden">></button>
                         </span>
                       </th>
                     </tr>
@@ -76,77 +81,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td >29</td>
-                        <td >30</td>
-                        <td >31</td>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>6</td>
-                        <td>7</td>
-                        <td>8</td>
-                        <td>9</td>
-                        <td>10</td>
-                        <td>11</td>
-                    </tr>
-                    <tr>
-                        <td>12</td>
-                        <td>13</td>
-                        <td>14</td>
-                        <td>15</td>
-                        <td>16</td>
-                        <td>17</td>
-                        <td>18</td>
-                    </tr>
-                    <tr>
-                        <td>19</td>
-                        <td class="btn btn-success"><strong>20</strong></td>
-                        <td>21</td>
-                        <td>22</td>
-                        <td>23</td>
-                        <td>24</td>
-                        <td>25</td>
-                    </tr>
-                    <tr>
-                        <td>26</td>
-                        <td>27</td>
-                        <td>28</td>
-                        <td>29</td>
-                        <td >1</td>
-                        <td >2</td>
-                        <td >3</td>
-                    </tr>
                 </tbody>
             </table>
 
-            <table id="hoursTable" class="table-condensed table-bordered table-striped">
+            <table id="hoursTable" class="table-condensed table-bordered table-striped hidden">
             	<caption>Elige una hora:</caption>
                 <tbody>
-                    <tr>
-                        <td>7:20</td>
-                         <td>7:20</td>
-                          <td>7:20</td>
-                          <td>7:20</td>
-                        <td>7:20</td>
-                        <td>7:20</td>
-						<td>7:20</td>
 
-                    </tr>
-                    <tr>
-                    	<td>7:20</td>
-                         <td>7:20</td>
-                          <td>7:20</td>
-                          <td>7:20</td>
-                        <td>7:20</td>
-                        <td>7:20</td>
-						<td class="btn btn-success">7:20</td>
- 
-                    </tr>
                   
                 </tbody>
             </table>
