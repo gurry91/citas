@@ -1,8 +1,15 @@
+<?php 
+	include 'php/profesorUtils.php';
+	include 'php/htmlUtils.php';
+  include 'php/calendarUtils.php';
+ ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/horario.css" rel="stylesheet">
 	<title>Mi horario</title>
 </head>
 <body>
@@ -15,7 +22,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a href="frmalumno.php" class="navbar-brand">Bienvenido usuario
+				<a href="frmalumno.php" class="navbar-brand">Bienvenido usuario 
 				<?php
 					session_start();
 					echo $_SESSION['nombre'];
@@ -37,52 +44,53 @@
 <div class="panel panel-default">
     <div class="panel-heading">HORARIO</div>
 	<div class="table-responsive">
-		<table class="table table-striped table-hover">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>HORAS</th>
-					<th>ALUMNO</th>	
-					<th>PROFESOR</th>				
-					<th>ACCION</th>				
-				</tr>
-			</thead>
-			<tbody>
-				<?php
-				     require('php/conexion.php');
-				     $user=$_SESSION['nombre'];
-				     $result=mysqli_query($conexion,"SELECT cita FROM datosusuario where id_usuario='$user'");
-				     $cita=mysqli_fetch_array($result);
-				     $codcita=$cita['cita'];
-				     if ($codcita==0){
-						 $result=mysqli_query($conexion,'SELECT * FROM horarios');
-						 while ($horarios=mysqli_fetch_array($result)){
-							 $id=$horarios['id_horario'];						 
-							 if ($horarios['alumno']==null){
-						 echo "<tr><td id='id:$id' class='cam_editable'>".$horarios['id_horario']."</td>";
-						 echo "<td id='horas:$id' class='cam_editable'>".$horarios['horas']."</td>";				     
-						 echo "<td id='alumno:$id' class='cam_editable'>".$horarios['alumno']."</td>";
-						 echo "<td id='profesor:$id' class='cam_editable'>".$horarios['profesor']."</td>";	
-						 echo"<td id='$id' name='$user' button='true'><button type='button' class='btn btn-success'><span class='glyphicon glyphicon-pencil'></span> Pedir cita</button></td>";
-						 echo"</tr>";
-							 }
-						 }
-					 }else{
-						 $result=mysqli_query($conexion,"SELECT * FROM horarios where id_horario='$codcita'");
-						 while ($horarios=mysqli_fetch_array($result)){
-							 $id=$horarios['id_horario'];
-							 echo "<tr><td id='id:$id' class='cam_editable'>".$horarios['id_horario']."</td>";
-							 echo "<td id='horas:$id' class='cam_editable'>".$horarios['horas']."</td>";
-							 echo "<td id='alumno:$id' class='cam_editable'>".$horarios['alumno']."</td>";
-							 echo "<td id='profesor:$id' class='cam_editable'>".$horarios['profesor']."</td>";
-							 echo"<td id='$id' name='$user' button='false'><button type='button' class='btn btn-danger'><span class='glyphicon glyphicon-remove'></span> Cancelar Cita</button></td>";
-							 echo"</tr>";
-						 }
-					 }
-				?>
-			</tbody>	
-					
-		</table>
+		<div style="text-align: center;margin: 40px auto; width: 480px">
+			<label>Elige Profesor: </label>
+            <div class="form-group" style="display: inline-block;min-width: 150px">
+            	<?php 
+                    $profesores = obtenerProfesores();
+                    $atributosComboProfesores = array("id" => "profesor", "class" => "form-control");
+            		echo generarComboDesdeAssocArray($profesores ,$atributosComboProfesores, "id", "nombre", true);
+            	 ?>
+            </div>
+
+            <button id="btnCita" class="btn btn-success" disabled style="float: right;">Pedir Cita</button>
+		</div>
+
+
+		<table id="calendarTable" class="table-condensed table-bordered table-striped">
+                <thead>
+                    <tr>
+                      <th colspan="7">
+                        <span id="calendarMonthWrapper" class="btn-group">
+                            <button id="previousMonthButton" class="btn btn-primary"><</button>
+                        	<a id="calendarMonth" class="btn disabled"></a>
+                        	<button id="nextMonthButton" class="btn btn-primary hidden">></button>
+                        </span>
+                      </th>
+                    </tr>
+                    
+                    <tr>
+                        <th>Lunes</th>
+                        <th>Martes</th>
+                        <th>Miercoles</th>
+                        <th>Jueves</th>
+                        <th>Viernes</th>
+                        <th>Sábado</th>
+                        <th>Domingo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+            <table id="hoursTable" class="table-condensed table-bordered table-striped hidden">
+            	<caption>Elige una hora:</caption>
+                <tbody>
+
+                  
+                </tbody>
+            </table>
 	</div>
 	</div>
 	
