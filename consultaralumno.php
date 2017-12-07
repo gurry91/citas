@@ -7,30 +7,7 @@
 </head>
 <body>
    <div class="container">
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#miMenu">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a href="frmprofesor.php" class="navbar-brand">Bienvenido Profesor
-				<?php
-					session_start();
-					echo $_SESSION['nombre'];
-					?>
-				</a>
-				</a>
-			</div>		
-			<div class="collapse navbar-collapse" id="miMenu">
-				<ul class="nav navbar-nav">						
-					<li><a href="citasprofesor.php">Citas</a></li>	
-					<li><a href="php/cerrarsesion.php"><span class="label label-danger">CERRAR SESION </span></a></li>								
-				</ul>
-			</div>
-		</div>
-	</nav>
+	<?php include $_SERVER["DOCUMENT_ROOT"] . "/citas/php/menu.php" ?>
 </div>
 <div class="container">
 <div class="panel panel-default">
@@ -66,4 +43,6 @@
 	<script src="js/jquery-2.2.3.min.js"></script>
 <script type="text/javascript" src="js/maindoctor.js"></script>
 <script src="js/bootstrap.min.js"></script>
+
+<?php include $_SERVER["DOCUMENT_ROOT"] . "/citas/php/cambiarPassword.php" ?>
 </body>
