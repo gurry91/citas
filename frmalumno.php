@@ -1,5 +1,23 @@
+<?php
+	include_once('constantes.php');  //incluir una sola
+	session_start(); //inicio sesion
+		
+		if(isset($_SESSION['rol'])){
+			if ($_SESSION['rol'] !=  'alumno' ){
+				
+				header("Location: error.php"); 
+			}
+		}
+		else{
+			header("Location: index.php");
+		}
+		
+					
+					
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 	<meta charset="UTF-8">
 	<link href="css/bootstrap.min.css" rel="stylesheet">
@@ -17,7 +35,6 @@
 				</button>
 				<a href="frmalumno.php" class="navbar-brand">Bienvenido usuario
 				<?php
-					session_start();
 					echo $_SESSION['nombre'];
 					?>
 				</a>

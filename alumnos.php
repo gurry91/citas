@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<title>Pacientes</title>
+	<title>Alumnos</title>
 </head>
 <body>
    <div class="container">
@@ -38,7 +38,7 @@
 
 <div class="container">
 <div class="panel panel-default">
-    <div class="panel-heading">LISTA DE PACIENTES</div>
+    <div class="panel-heading">LISTA DE ALUMNOS</div>
 	<div class="table-responsive">
 		<table class="table table-striped table-hover">
 			<thead>
