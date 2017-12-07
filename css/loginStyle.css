@@ -1,9 +1,12 @@
 body {
-	background-image: url(../images/citas.jpg);
+	background-color: ;
 	background-position: top center;
 	background-repeat: no-repeat;
-	padding-top: 30%;
+	padding-top: 0%;
 }
+
+#logo {margin: auto;}
+
 form {
 	width: 500px;
 	margin: auto;

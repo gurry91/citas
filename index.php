@@ -8,7 +8,12 @@
 
 </head>
 <body>
+<div style="text-align: center">
+<img src="images/logo.jpeg" class="img-fluid" id="logo"  />
+<div />
 <form  method="post" id= "iniciar" name="iniciar" onsubmit="iniciarsesion(); return false">
+
+	<img href="Citas" />
 	<legend>Iniciar sesión</legend>
 	<input type="text" placeholder="usuario" name="usuario" required>
 	<input type="password" placeholder="contraseña" name="password" required>
