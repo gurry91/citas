@@ -98,8 +98,5 @@
 		</nav>
 <?php
 		break;
-		default:
-			header("Location: ../index.php");
-			break;
 	}
  ?>

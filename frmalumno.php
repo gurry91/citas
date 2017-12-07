@@ -1,19 +1,8 @@
 <?php
-	include_once $_SERVER['DOCUMENT_ROOT'] . '/citas/constantes.php';
-	session_start(); //inicio sesion
-		
-		if(isset($_SESSION['rol'])){
-			if ($_SESSION['rol'] !=  ROL_ALUMNO ){
-				
-				header("Location: error/error403.php"); 
-			}
-		}
-		else{ 
-			header("Location: error/error403.php" ); 
-		}
-		
-					
-					
+	include_once $_SERVER['DOCUMENT_ROOT'] . '/citas/php/controlAcceso.php';
+	
+	setRolPermitido(ROL_ALUMNO);
+	compruebaPermisos();
 ?>
 
 <!DOCTYPE html>

@@ -1,5 +1,12 @@
+<?php
+	include_once $_SERVER['DOCUMENT_ROOT'] . '/citas/php/controlAcceso.php';
+	
+	setRolPermitido(ROL_PROFESOR);
+	compruebaPermisos();
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 	<meta charset="UTF-8">
 	<link href="css/bootstrap.min.css" rel="stylesheet">
@@ -13,5 +20,5 @@
 <!--//////////////////////////////////////////////////-->
 <script src="js/jquery-2.2.3.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<?php include $_SERVER["DOCUMENT_ROOT"] . "/citas/php/cabiarPassword.php" ?>
+<?php include $_SERVER["DOCUMENT_ROOT"] . "/citas/php/cambiarPassword.php" ?>
 </body>
