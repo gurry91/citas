@@ -1,7 +1,6 @@
 MESES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
-DIAS = ["Lunes","Martes","Miercoles","Jueves","Viernes","Sábado","Domingo"];
+DIAS = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"];
 
-var mes;
 var dia;
 var profesorSeleccionado;
 var horarioSeleccionado;
@@ -47,7 +46,10 @@ function eventoProfesor(){
 
 function cargaDiasProfesor(){
 	
-	profesorSeleccionado = this.value;
+	if(this.value){
+		profesorSeleccionado = this.value;
+	}
+
 	resetCalendario();
 
 	$.get("php/profesorRouter.php","accion=getDias&profesor="+profesorSeleccionado, function(data){
@@ -66,7 +68,7 @@ function eventosCalendario(){
 		cargaMes();
 	});
 	$("#nextMonthButton").click(function(){
-		cargaMes(mes + 1);
+		cargaMes(fechaCargada.getMonth() + 1);
 	});
 }
 
@@ -77,13 +79,20 @@ function cargaMes(mes){
 	
 	if(mes){
 		fecha.setMonth(mes);
+	}else{
+		mes = fecha.getMonth();
 	}
-	fechaCargada = fecha;
-	this.mes = fecha.getMonth();
 
-	$("#calendarMonth").text(MESES[this.mes]);
+	fechaCargada = fecha;
+
+	$("#calendarMonth").text(MESES[fecha.getMonth()]);
 	ocultaBotonesNavMeses();
-	cargaDias(this.mes);
+
+	cargaDias(mes);
+	
+	if(profesorSeleccionado){
+		cargaDiasProfesor();
+	}
 }
 
 function ocultaBotonesNavMeses(){
@@ -91,6 +100,7 @@ function ocultaBotonesNavMeses(){
 	$("#nextMonthButton").toggleClass("hidden");
 }
 
+/** Carga los días de un mes */
 function cargaDias(mes){
 	var dias = getDiasDelMes(mes);
 	var diaSemanaComienzoMes = getPrimerDiaSemanaMes(mes);
@@ -100,16 +110,17 @@ function cargaDias(mes){
 	var celdasCalendario = new Array();
 
 	var celda = 0;
-	var diasPintados = 1;
+	var diasAgregados = 1;
 
+	// Rellena un array bidimensional (Semana / día semana) que representará el calendario para el mes
 	for (var semana = 0; semana < semanasCalendario; semana++) {
 		celdasCalendario[semana] = new Array();
 
 		for (var dia = 0; dia < DIAS.length; dia++) {
 
-			if(celda >= diaSemanaComienzoMes && diasPintados <= dias){
-				celdasCalendario[semana][dia] = diasPintados;
-				diasPintados++;
+			if(celda >= diaSemanaComienzoMes && diasAgregados <= dias){
+				celdasCalendario[semana][dia] = diasAgregados;
+				diasAgregados++;
 			}else{
 				celdasCalendario[semana][dia] = null;
 			}
@@ -124,7 +135,7 @@ function cargaDias(mes){
 
 function getDiasDelMes(mes){
 	var fecha = new Date();
-	fecha.setMonth(mes + 1);
+	fecha.setMonth(mes);
 	fecha.setDate(0); // Devuelve el último día del mes anterior
 
 	return fecha.getDate();
@@ -135,12 +146,12 @@ function getPrimerDiaSemanaMes(mes){
 	fecha.setMonth(mes);
 	fecha.setDate(1);
 
-	var diaSemana = fecha.getDay();
-	return getDiaCompatibleConArray(diaSemana);
+	return getDiaSemana(fecha);
 }
 
 //Parseo de compatibilidad con el Array DIAS, dado que la API devuelve 0 = Domingo
-function getDiaCompatibleConArray(diaSemanaAPI){
+function getDiaSemana(fecha){
+	var diaSemanaAPI = fecha.getDay();
 	var diaCompatible = diaSemanaAPI - 1;
 	
 	if(diaSemanaAPI == 6){
@@ -172,15 +183,25 @@ function pintaDiasCalendario(semanas){
 }
 
 function eventoClickDia(){
-	$("#calendarTable td.btn").click(cargaHoras);
+	$("#calendarTable td.btn").click(clickDiaHandler);
 }
 
-function cargaHoras(){
-	var diaSemana = $(this).attr("data-dia");
-	var profesor = profesorSeleccionado;
-	dia = $(this).text();
+function clickDiaHandler(){
+	cargaHoras($(this).text());
+}
 
-	$.get("php/profesorRouter.php","accion=getHoras&profesor="+profesorSeleccionado+"&diaSemana="+diaSemana, function(data){
+function cargaHoras(diaSeleccionado){
+	dia = diaSeleccionado;
+
+	var fechaSeleccionada = new Date(fechaCargada.getTime());
+	fechaSeleccionada.setDate(diaSeleccionado);
+	var diaSemana = getDiaSemana(fechaSeleccionada);
+	var profesor = profesorSeleccionado;
+
+	var fechaSerializada = fechaSeleccionada.toISOString(); //(YYYY-MM-DDTHH:mm:ss)
+	fechaSerializada = fechaSerializada.substring(0, fechaSerializada.indexOf("T")); // Convierte fecha a cadena omitiendo la hora (YYYY-MM-DD)
+
+	$.get("php/profesorRouter.php","accion=getHoras&profesor="+profesorSeleccionado+"&diaSemana="+diaSemana+"&fecha="+fechaSerializada, function(data){
 		var horario = $.parseJSON(data); 
 		if(horario != null && horario.length > 0){
 			pintaHorario(horario);
@@ -194,26 +215,26 @@ function pintaHorario(horario){
 	var CELDAS_POR_FILA = 7;
 
 	var filas = Math.ceil(horario.length / CELDAS_POR_FILA);
-	var contador = 0;
+	var hora = 0;
 
 	for (var fila = 0; fila < filas; fila++) {
 		var nodoFila = $("<tr></tr>");
 
-		for (var hora = 0; hora < CELDAS_POR_FILA; hora++){
+		for (var horaFila = 0; horaFila < CELDAS_POR_FILA; horaFila++){
 			
-			if(contador >= horario.length){
+			if(hora >= horario.length){
 				break;
 			}
 
-			var nodoCelda = $("<td></td>").text(horario[contador]["hora_inicio"]);
+			var nodoCelda = $("<td></td>").text(horario[hora]["hora_inicio"]);
 
-			if(horario[contador]["estado"] == 0){
+			if(horario[hora]["estado"] == 0){
 				nodoCelda.addClass("btn btn-primary");
-				nodoCelda.attr("data-id", horario[contador]["id_horario"]);
+				nodoCelda.attr("data-id", horario[hora]["id_horario"]);
 			}
 
 			nodoFila.append(nodoCelda);
-			contador++;
+			hora++;
 		}
 
 		
@@ -249,8 +270,9 @@ function eventoClickPedirCita(){
 }
 
 function registrarCita(){
-	$.post("php/apartarcita.php","horario="+horarioSeleccionado+"&day="+dia+"&month="+(mes + 1)+"&year="+fechaCargada.getFullYear(), function(data){
+	$.post("php/apartarcita.php","horario="+horarioSeleccionado+"&day="+dia+"&month="+(fechaCargada.getMonth() + 1)+"&year="+fechaCargada.getFullYear(), function(data){
 		alert(data);
+		cargaHoras(dia);
 	});
 }
 

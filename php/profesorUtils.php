@@ -37,9 +37,9 @@
 	}	
 
 
-	function obtenerHorario($diaSemana, $profesor){
+	function obtenerHorario($diaSemana, $profesor, $fecha){
 		$conexion = getDBConexion();
-		$sql = sprintf("SELECT h.id_horario, h.hora_inicio, (CASE WHEN c.id_horario IS NULL THEN 0 ELSE 1 END) estado FROM horarios h LEFT JOIN citas c ON (c.id_horario = h.id_horario) WHERE h.profesor = %d AND h.dia = %d", $profesor, $diaSemana);
+		$sql = sprintf("SELECT horarios.id_horario, horarios.hora_inicio, (CASE WHEN citas.id_horario IS NULL THEN 0 ELSE 1 END) estado FROM horarios LEFT JOIN citas ON (citas.id_horario = horarios.id_horario AND citas.fecha = '%s') WHERE horarios.profesor = %d AND horarios.dia = %d", $fecha, $profesor, $diaSemana);
 
 		$resultSet = mysqli_query($conexion,$sql) or die(mysqli_error($conexion));
 		$dias = array();

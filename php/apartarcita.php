@@ -9,11 +9,7 @@ if(!empty($_POST)){
 	$month = $_POST["month"];
 	$year = $_POST["year"];
 
-	error_log($month);
-
 	$fecha = date("Y-m-d", mktime(0,0,0,$month,$day,$year));
-
-	error_log($fecha);
 
 	$conexion = mysqli_connect($servidor,$server_admin,$server_pass, $database) or die ("no se encuentra la bd");
 
@@ -22,7 +18,7 @@ if(!empty($_POST)){
 	}
 
 	$sql = sprintf("INSERT INTO citas (id_horario, id_usuario, fecha) VALUES (%d,%d,'%s')", $horario, $alumno, $fecha);
-	error_log($sql);
+
 	mysqli_query($conexion,$sql) or die(mysqli_error($conexion));
 	mysqli_close($conexion);
 
