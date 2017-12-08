@@ -1,5 +1,9 @@
-<?php 
-	include 'php/profesorUtils.php';
+<?php
+  include_once $_SERVER['DOCUMENT_ROOT'] . '/citas/php/controlAcceso.php';
+  include 'php/profesorUtils.php';
+  
+  setRolPermitido(ROL_PROFESOR);
+  compruebaPermisos();
  ?>
 
 <!DOCTYPE html>

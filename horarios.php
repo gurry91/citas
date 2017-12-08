@@ -1,9 +1,12 @@
 <?php 
 	include 'php/profesorUtils.php';
 	include 'php/htmlUtils.php';
-  include 'php/calendarUtils.php';
- ?>
-
+    include 'php/calendarUtils.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/citas/php/controlAcceso.php';
+  
+  setRolPermitido(ROL_ALUMNO);
+  compruebaPermisos();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

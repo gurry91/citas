@@ -25,9 +25,9 @@
 				</div>		
 				<div class="collapse navbar-collapse" id="miMenu">
 					<ul class="nav navbar-nav">
-						<li><a href="datospersonales.php">Datos personales</a></li>
 						<li><a href="horarios.php">Horarios</a></li>
 						<li><a onclick="cambiar();" href="#">Cambiar contraseña</a></li>	
+						<li><a href="datospersonales.php">Datos personales</a></li>
 						<li><a href="php/cerrarsesion.php"><span class="label label-danger">CERRAR SESION </span></a></li>								
 					</ul>
 				</div>
@@ -58,6 +58,8 @@
 					<ul class="nav navbar-nav">						
 						<li><a href="citasprofesor.php">Citas</a></li>
 						<li><a href="gestionHorario.php">Gestión Horario</a></li>
+						<li><a href="alumnos.php">Alumnos</a></li>	
+						<li><a href="datospersonales.php">Datos personales</a></li>
 						<li><a onclick="cambiar();" href="#">Cambiar contraseña</a></li>	
 						<li><a href="php/cerrarsesion.php"><span class="label label-danger">CERRAR SESION </span></a></li>								
 					</ul>

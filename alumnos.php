@@ -1,3 +1,11 @@
+<?php
+  include_once $_SERVER['DOCUMENT_ROOT'] . '/citas/php/controlAcceso.php';
+  
+  setRolPermitido(ROL_PROFESOR);
+  setRolPermitido(ROL_ADMIN);
+  compruebaPermisos();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

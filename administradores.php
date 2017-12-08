@@ -1,3 +1,9 @@
+<?php
+  include_once $_SERVER['DOCUMENT_ROOT'] . '/citas/php/controlAcceso.php';
+  
+  setRolPermitido(ROL_ADMIN);
+  compruebaPermisos();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
