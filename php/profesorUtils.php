@@ -4,7 +4,7 @@
 
 	function obtenerProfesores(){
 		$conexion = getDBConexion();
-		$sql = sprintf("SELECT usuarios.* FROM usuarios INNER JOIN roles ON (roles.id = usuarios.rol ) WHERE roles.descripcion = '%s'", ROL_PROFESOR);
+		$sql = sprintf("SELECT usuarios.id, CONCAT(usuarios.nombre, ' ' ,usuarios.apellido) nombre FROM usuarios INNER JOIN roles ON (roles.id = usuarios.rol ) WHERE roles.descripcion = '%s'", ROL_PROFESOR);
 
 		$resultSet = mysqli_query($conexion,$sql) or die(mysqli_error($conexion));
 		$profesores = array();
