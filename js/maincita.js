@@ -1,44 +1,19 @@
+// Definición se meses y días dado que la API de javascript devuelve los textos en inglés
 MESES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 DIAS = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"];
 
+// Variables globales
 var dia;
 var profesorSeleccionado;
 var horarioSeleccionado;
 var fechaCargada;
 
-$(document).ready(function(){		
-		$("td[button=true]").click(function(){
-			if (confirm("Desea pedir esta cita")) {
-			var field_id=$(this).attr("id");
-			var value=$(this).attr("name");			
-			console.log('value:'+value+' field:'+field_id);
-			$.post('php/apartarcita.php', field_id+"="+value,function(respuesta){	
-				if (respuesta=="true")
- 				window.location.reload(true);
- 			else
- 				alert(respuesta);	
-			});			
-		}
-		});
-	$("td[button=false]").click(function(){
-			if (confirm("Desea cancelar esta cita?")) {
-			var field_id=$(this).attr("id");
-			var value=$(this).attr("name");			
-			console.log('value:'+value+' field:'+field_id);
-			$.post('php/cancelarcita.php', field_id+"="+value,function(respuesta){	
-				if (respuesta=="true")
- 				window.location.reload(true);
- 			else
- 				alert(respuesta);		
-			});			
-		}
-		});	
-
-		cargaMes();
-		eventoClickPedirCita();
-		eventosCalendario();
-		eventoProfesor();
-	});	
+$(document).ready(function(){ //jQuery onload - Ejecuta el contenido cuando carga la pantalla		
+	cargaMes();
+	eventoClickPedirCita();
+	eventosCalendario();
+	eventoProfesor();
+});	
 
 function eventoProfesor(){
 	$("select#profesor").change(cargaDiasProfesor);
@@ -52,11 +27,22 @@ function cargaDiasProfesor(){
 
 	resetCalendario();
 
-	$.get("php/profesorRouter.php","accion=getDias&profesor="+profesorSeleccionado, function(data){
-		var dias = $.parseJSON(data); 
+	$.get("php/profesorRouter.php","accion=getDias&profesor="+profesorSeleccionado, function(data){ 
+		var dias = $.parseJSON(data);
+		var fechaActual = new Date();
 
+		//Añade estilo botón a los días del calendario que estén en un dia de la semana habilitado para citas del profesor seleccionado
 		for(var dia in dias){
-			$("#calendarTable td[data-dia='" + dias[dia] + "']").addClass("btn btn-primary");
+			$("#calendarTable td[data-dia='" + dias[dia] + "']").each(function(){
+				//Obtiene la fecha del elemento de calendario por el que va iterando
+				var fechaElemento = new Date(fechaCargada.getTime());
+				fechaElemento.setDate($(this).text());
+
+				// Si es una fecha mayor o igual al día de hoy lo habilita para ser seleccionable
+				if(fechaElemento.getTime() >= fechaActual.getTime()){
+					$(this).addClass("btn btn-primary");
+				}
+			}); 
 		}
 
 		eventoClickDia();
@@ -75,10 +61,10 @@ function eventosCalendario(){
 function cargaMes(mes){
 	resetCalendario();
 
-	var fecha = new Date();
+	var fecha = new Date(); 
 	
 	if(mes){
-		fecha.setMonth(mes);
+		fecha.setMonth(mes); // Si el mes es superior a 12 la API pasa al siguiente año
 	}else{
 		mes = fecha.getMonth();
 	}
@@ -102,25 +88,28 @@ function ocultaBotonesNavMeses(){
 
 /** Carga los días de un mes */
 function cargaDias(mes){
+	
 	var dias = getDiasDelMes(mes);
 	var diaSemanaComienzoMes = getPrimerDiaSemanaMes(mes);
-
+	
+	// Calcula el numero de semanas que necesito para pintar el calendario en función del día de la semana en que comience el mes y el numero total de días del mes
 	var semanaIncompleta = (dias + diaSemanaComienzoMes) % DIAS.length > 0;
 	var semanasCalendario = Math.trunc((dias + diaSemanaComienzoMes) / DIAS.length) + (semanaIncompleta ? 1 : 0);
+
 	var celdasCalendario = new Array();
 
-	var celda = 0;
-	var diasAgregados = 1;
+	var celda = 0; //Contador de celdas que se agregan al calendario
+	var diasAgregados = 1; // Contador de días que se agregan al calendario
 
 	// Rellena un array bidimensional (Semana / día semana) que representará el calendario para el mes
-	for (var semana = 0; semana < semanasCalendario; semana++) {
+	for (var semana = 0; semana < semanasCalendario; semana++) { // Agrega semanas
 		celdasCalendario[semana] = new Array();
 
-		for (var dia = 0; dia < DIAS.length; dia++) {
+		for (var dia = 0; dia < DIAS.length; dia++) { //Agrega dias
 
 			if(celda >= diaSemanaComienzoMes && diasAgregados <= dias){
 				celdasCalendario[semana][dia] = diasAgregados;
-				diasAgregados++;
+				diasAgregados++;	
 			}else{
 				celdasCalendario[semana][dia] = null;
 			}
@@ -164,7 +153,7 @@ function getDiaSemana(fecha){
 }
 
 function pintaDiasCalendario(semanas){
-	var calendarTable = $("#calendarTable tbody");
+	var calendarTable = $("#calendarTable tbody"); //Guarda el elemento HTML tbody para posteriormente agregarle los dias
 	calendarTable.empty(); //Resetea el contenido del mes previo
 
 	for (var semana in semanas) {
@@ -183,7 +172,7 @@ function pintaDiasCalendario(semanas){
 }
 
 function eventoClickDia(){
-	$("#calendarTable td.btn").click(clickDiaHandler);
+	$("#calendarTable td.btn").click(clickDiaHandler); //Aplica evento click solamente los días seleccionables
 }
 
 function clickDiaHandler(){
@@ -198,15 +187,15 @@ function cargaHoras(diaSeleccionado){
 	var diaSemana = getDiaSemana(fechaSeleccionada);
 	var profesor = profesorSeleccionado;
 
-	var fechaSerializada = fechaSeleccionada.toISOString(); //(YYYY-MM-DDTHH:mm:ss)
-	fechaSerializada = fechaSerializada.substring(0, fechaSerializada.indexOf("T")); // Convierte fecha a cadena omitiendo la hora (YYYY-MM-DD)
+	var fechaSerializada = fechaSeleccionada.toISOString(); //(YYYY-MM-DDTHH:mm:ss) Convierte la fecha a texto
+	fechaSerializada = fechaSerializada.substring(0, fechaSerializada.indexOf("T")); // Omite la hora (YYYY-MM-DD)
 
 	$.get("php/profesorRouter.php","accion=getHoras&profesor="+profesorSeleccionado+"&diaSemana="+diaSemana+"&fecha="+fechaSerializada, function(data){
 		var horario = $.parseJSON(data); 
 		if(horario != null && horario.length > 0){
 			pintaHorario(horario);
 		}
-	});
+	});	
 }
 
 function pintaHorario(horario){
