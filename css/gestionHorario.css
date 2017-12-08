@@ -1,31 +1,33 @@
-#calendarTable, #hoursTable{
-	text-align: center;
+#diasPanel{
+	margin-top: 2%;
+	margin-bottom: 4%;
+}
+
+#formIntervalo{
 	margin: auto;
+	width: 50%;
+	min-width: 569px;
 }
-#calendarTable th, #calendarTable td, #hoursTable th, #hoursTable td{
+
+#formIntervalo #buttons{
 	text-align: center;
-	width: 80px;
-}
-
-#calendarTable td, #hoursTable td{
-	padding: 10px 0;
-}
-
-#calendarMonth{
-	cursor: default;
-	color: black;
-}
-
-#calendarMonthWrapper *{
-	font-weight: bold;
 }
 
 #hoursTable{
-	margin-top: 40px; 
-	margin-bottom: 40px;
+	margin: auto;
+	margin-top: 2%;
+	margin-bottom: 2%;
+
 }
 
-#hoursTable caption{
-	border-top: 1px solid;
-	border-color: rgb(200, 200, 200);
+#hoursTable td, #hoursTable th{
+	padding: 10px 0;
+	text-align: center;
+	width: 80px;
+	border-color: white;
+}
+
+#diasPanel button{
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
