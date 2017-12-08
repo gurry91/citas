@@ -36,12 +36,6 @@
       <form id="formIntervalo" onsubmit="return false">
         <fieldset disabled>
           
-          <div id="formMensajes" class="alert alert-danger alert-dismissable fade in show hidden">
-              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-              <ul> 
-              </ul>
-          </div>
-
             <div class="form-row align-items-center">               
              
               <div class="form-group col-md-4">
