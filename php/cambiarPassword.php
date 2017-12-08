@@ -5,7 +5,7 @@
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               <h4 class="modal-title">Cambiar Contraseña</h4>
             </div>
-            <form role="form"  id= "frmcambiar" name="frmcambiar" onsubmit="cambiarpassword(); return false">
+            <form method="post" action="php/modificarpassword.php" role="form"  id= "frmcambiar" name="frmcambiar">
               <div class="col-lg-12">               
 
                 <div class="form-group">

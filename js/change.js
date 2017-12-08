@@ -6,10 +6,12 @@ function cambiarpassword(){
 			   else
  				alert(respuesta);
 			   
-		if (respuesta=="Contraseña actualizada")
-			window.location.reload(true);
+		if (respuesta=="true") 
+			window.location.href = "index.php";
+		
 		});			   
-	}else{
+	}
+	else{
 		alert('');
 	}
 }

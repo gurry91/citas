@@ -4,7 +4,7 @@ $(document).ready(function(){
 			var field_id=$(this).attr("id");
 			var value=$(this).text();			
 			console.log('value: '+value+' field:'+field_id);
-			$.post('php/modificarpaciente.php', field_id+"="+value,function(data){	
+			$.post('php/modificaralumno.php', field_id+"="+value,function(data){	
 				if(data!=''){
 					console.log(data);
 					
@@ -44,7 +44,7 @@ $(document).ready(function(){
 		console.log('value: '+value);
 		$.post('php/consultardatos.php',value,function(respuesta){	
 				if (respuesta=="true")
- 				window.location.href = "moverpaciente.php";
+ 				window.location.href = "moveralumno.php";
  			else
  				alert(respuesta);	
 			});			
