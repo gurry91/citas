@@ -1,4 +1,7 @@
+<?php
+include_once $_SERVER['DOCUMENT_ROOT'] . '/citas/constantes.php';
 
+?>
 <!doctype html>
 <html>
 <head>
@@ -61,10 +64,25 @@
 		<h1>ERROR 403</h1>
 		<p>¡No puedes pasar!</p>
 		<br/>
-		<a class="btn btn-primary" href="/citas/index.php" role="button">Volver a página inicial</a>
+		<a class="btn btn-primary" href="javascript:pantallainicial()" role="button">Volver a página inicial</a>
 	</div>
 	 
-	
+<script>
+function pantallainicial(){		
+    var rol='<?php session_start(); echo $_SESSION['rol']?>';
+ 			if (rol=="admin"){
+ 				window.location.href = "../frmadmin.php";	
+			}else if(rol=="profesor"){
+ 				window.location.href = "../frmprofesor.php";
+			}else{
+				if(rol=="alumno"){
+				window.location.href = "../frmalumno.php";
+				}else{
+				window.location.href = "../index.php";
+				}
+			}
+		}
+</script>
 
 </body>
 </html>

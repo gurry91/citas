@@ -1,15 +1,15 @@
 <?php
-	include_once('constantes.php');  //incluir una sola
+	include_once $_SERVER['DOCUMENT_ROOT'] . '/citas/constantes.php';
 	session_start(); //inicio sesion
 		
 		if(isset($_SESSION['rol'])){
-			if ($_SESSION['rol'] !=  'alumno' ){
+			if ($_SESSION['rol'] !=  ROL_ALUMNO ){
 				
-				header("Location: error.php"); 
+				header("Location: error/error403.php"); 
 			}
 		}
-		else{
-			header("Location: index.php");
+		else{ 
+			header("Location: error/error403.php" ); 
 		}
 		
 					
