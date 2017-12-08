@@ -17,10 +17,10 @@ $(document).ready(function(){
 		});		
 		
 		$("td[button=true]").click(function(){
-			if (confirm("esta seguro")) {
+			if (confirm("¿esta seguro?")) {
 			var field_id=$(this).attr("id");
 			console.log('id:'+field_id);			
-			$.post('php/eleminaradmin.php', field_id,function(respuesta){
+			$.post('php/eliminarUsuario.php', "id=" + field_id,function(respuesta){
 				if (respuesta=="true")
  				window.location.reload(true);
  			else
@@ -80,9 +80,7 @@ function Registraralumno(){
 		$.post('php/agregaralumno.php','&'+$("#frmalumno").serialize(),function(respuesta){
  			if (respuesta=="true")
  				window.location.reload(true);
-			   else
- 				alert(respuesta);
-			   });			   
+			  });			   
 	}else{
 		alert('las contraseñas no coinciden');
 	}
