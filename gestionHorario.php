@@ -24,43 +24,50 @@
   <div class="panel-heading">GESTION DE HORARIO</div>
 	<div class="table-responsive">
 		    <div id="diasPanel" style="text-align: center; padding-top: 15px">
-              <button type="button" class="btn btn-primary">Lunes</button>
-              <button class="btn btn-primary">Martes</button>
-              <button class="btn btn-primary">Miércoles</button>
-              <button class="btn btn-primary">Jueves</button>
-              <button class="btn btn-primary">Viernes</button> 
-              <button class="btn btn-primary">Sábado</button>
-              <button class="btn btn-primary">Domingo</button>
+              <button data-dia="0" class="btn btn-primary">Lunes</button>
+              <button data-dia="1" class="btn btn-primary">Martes</button>
+              <button data-dia="2" class="btn btn-primary">Miércoles</button>
+              <button data-dia="3" class="btn btn-primary">Jueves</button>
+              <button data-dia="4" class="btn btn-primary">Viernes</button> 
+              <button data-dia="5" class="btn btn-primary">Sábado</button>
+              <button data-dia="6" class="btn btn-primary">Domingo</button>
         </div>
 
-      <form id="formIntervalo" onsubmit="Registraralumno(); return false">
+      <form id="formIntervalo" onsubmit="return false">
         <fieldset disabled>
+          
+          <div id="formMensajes" class="alert alert-danger alert-dismissable fade in show hidden">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              <ul> 
+              </ul>
+          </div>
+
             <div class="form-row align-items-center">               
              
               <div class="form-group col-md-4">
-                <label for="horaInicio">Hora Inicio</label>
-                <input type="text" class="form-control mb-2" id="horaInicio" placeholder="HH:mm" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]">
+                <label for="horaInicio">Hora Inicio Citas</label>
+                <input type="text" class="form-control mb-2" id="horaInicio" placeholder="HH:mm" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" required>
               </div>
 
               <div class="form-group col-md-4">
-                <label for="horaFin">Hora Inicio</label>
-                <input type="text" class="form-control mb-2" id="horaFin" placeholder="HH:mm" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]">
+                <label for="horaFin">Hora Fin Citas</label>
+                <input type="text" class="form-control mb-2" id="horaFin" placeholder="HH:mm" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" required>
               </div>
 
               <div class="form-group col-md-4">
                 <label for="intervalo">Intervalo (minutos)</label>
-                <input type="number" class="form-control mb-2" id="intervalo" maxlength="60">
+                <input type="number" class="form-control mb-2" id="intervalo" max="60" required>
               </div>
               
               <div class="form-group col-md-12" id="buttons">
-                <button type="submit" class="btn btn-success">Mostrar Horas</button>
-               <button id="btnCita" class="btn btn-success" disabled>Registrar Horario</button>
+                <button id="btnHoras" class="btn btn-success">Mostrar Horas</button>
+                <button id="btnGuardar" class="btn btn-success disabled">Registrar Horario</button>
               </div>
             </div>
          </fieldset>             
       </form>
 
-    <table id="hoursTable" class="table-condensed table-bordered">
+    <table id="hoursTable" class="table-condensed table-bordered hidden">
         <caption>Selecciona las horas deseadas: </caption>
           <tbody>
               <tr>
@@ -86,6 +93,7 @@
 <!--//////////////////////////////////////////////////-->	
 <script src="js/jquery-2.2.3.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/gestionHorario.js"></script>
 <?php include $_SERVER["DOCUMENT_ROOT"] . "/citas/php/cambiarPassword.php" ?>
 <!--//////////////////////////////////////////////////////////////////////////////////////////////////-->
 </body>
