@@ -17,6 +17,15 @@ if(!empty($_POST)){
 		die("Falló la conexión: " . mysqli_connect_error());
 	}
 
+	$sql = sprintf("SELECT COUNT(*) FROM citas WHERE id_usuario = %d AND fecha = '%s'", $alumno, $fecha);
+	$result = mysqli_query($conexion,$sql) or die(mysqli_error($conexion));
+	$tieneCita = mysqli_fetch_array($result)[0];
+
+	if($tieneCita > 0){
+		mysqli_close($conexion);
+		die("Ya tienes una cita para el día " . $day);
+	}
+
 	$sql = sprintf("INSERT INTO citas (id_horario, id_usuario, fecha) VALUES (%d,%d,'%s')", $horario, $alumno, $fecha);
 
 	mysqli_query($conexion,$sql) or die(mysqli_error($conexion));
