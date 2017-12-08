@@ -12,28 +12,29 @@ $(document).ready(function(){
 		});		
 		
 		$("td[button=true]").click(function(){
-			if (confirm("esta seguro")) {
+			if (confirm("¿esta seguro?")) {
 			var field_id=$(this).attr("id");
 			console.log('id:'+field_id);			
-			$.post('php/eliminaralumno.php', field_id,function(respuesta){
+			$.post('php/eliminarUsuario.php', "id=" + field_id,function(respuesta){
 				if (respuesta=="true")
- 				window.location.reload(true);
- 			else
- 				alert(respuesta);
+	 				window.location.reload(true);
+	 			else
+	 				alert("Hubo un problema al borrar el usuario");
 			});		 		
 		}
 		});		
 	});	
 });
-function Registrarpaciente(){	
+
+function Registraralumno(){	
 	if (document.getElementById("p1").value == document.getElementById("p2").value){
-		$.post('php/agregaralumno.php','&'+$("#frmpaciente").serialize(),function(respuesta){
+		$.post('php/agregaralumno.php','&'+$("#frmalumno").serialize(),function(respuesta){
  			if (respuesta=="true")
- 				window.location.reload(true);
-			   else
  				alert(respuesta);
+ 				window.location.reload(true);
 			   });			   
 	}else{
 		alert('las contraseñas no coinciden');
 	}
 }
+

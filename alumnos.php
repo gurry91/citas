@@ -1,6 +1,6 @@
 <?php
   include_once $_SERVER['DOCUMENT_ROOT'] . '/citas/php/controlAcceso.php';
-  
+
   setRolPermitido(ROL_PROFESOR);
   setRolPermitido(ROL_ADMIN);
   compruebaPermisos();
@@ -11,6 +11,7 @@
 <head>
 	<meta charset="UTF-8">
 	<link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/registroUsuario.css" rel="stylesheet">
 	<title>Alumnos</title>
 </head>
 <body>
@@ -34,35 +35,38 @@
 					<th>CORREO</th>	
 					<th>TELEFONO</th>	
 					<th>FECHA DE NACIMIENTO</th>	
-					<th>SEXO</th>		
-					<th>ACCIONES</th>				
+					<th>SEXO</th>	
+          <?php  if($_SESSION["rol"] == ROL_ADMIN){ ?>	
+					 <th>ACCIONES</th>				
+          <?php } ?>
 				</tr>
 			</thead>
 			<tbody>
 				<?php
 				     require('php/conexion.php');
-				     $result=mysqli_query($conexion,'SELECT n_usuario FROM usuarios where rol="3"');				    
+				     $result=mysqli_query($conexion,sprintf('SELECT n_usuario FROM usuarios INNER JOIN roles ON (roles.id = usuarios.rol) where roles.descripcion ="%s"', ROL_ALUMNO));				    
 				     while ($usuarios=mysqli_fetch_array($result)){
-						 $id=$usuarios['n_usuario'];
-					 //////////////////////////////////////
-					 $result2=mysqli_query($conexion,"SELECT * FROM usuarios where n_usuario='$id'");
-					 $dato=mysqli_fetch_array($result2);
-					 //////////////////////////////////////
-					 echo "<tr><td id='id:$id' class='cam_editable'>".$usuarios['n_usuario']."</td>";
-					 echo "<td id='cedula:$id' class='cam_editable' contenteditable='true'>".$dato['dni']."</td>";
-				     echo "<td id='nombre:$id' class='cam_editable' contenteditable='true'>".$dato['nombre']."</td>";
-					 echo "<td id='apellido:$id' class='cam_editable' contenteditable='true'>".$dato['apellido']."</td>";
-					 echo "<td id='apellido2:$id' class='cam_editable' contenteditable='true'>".$dato['apellido2']."</td>";
-					 //////////////////////////////////////
-					 echo "<td id='direccion:$id' class='cam_editable' contenteditable='true'>".$dato['direccion']."</td>";
-					 echo "<td id='correo:$id' class='cam_editable' contenteditable='true'>".$dato['correo']."</td>";
-					 echo "<td id='telefono:$id' class='cam_editable' contenteditable='true'>".$dato['telefono']."</td>";
-					 echo "<td id='fecha:$id' class='cam_editable' contenteditable='true'>".$dato['fecha']."</td>";
-					 echo "<td id='sexo:$id' class='cam_editable' contenteditable='true'>".$dato['sexo']."</td>";
-					 echo "<td id='regimen subsidiario:$id' class='cam_editable' contenteditable='true'>".$dato['regimensubsidiario']."</td>"; 
-					 ///////////////////////////////////////	 
-				     echo"<td id='$id' button='true'><button type='button' class='btn btn-danger'><span class='glyphicon glyphicon-minus'></span> Eliminar</button></td>";
-					 echo"</tr>";
+    						 $id=$usuarios['n_usuario'];
+      					 //////////////////////////////////////
+      					 $result2=mysqli_query($conexion,"SELECT * FROM usuarios where n_usuario='$id'");
+      					 $dato=mysqli_fetch_array($result2);
+      					 //////////////////////////////////////
+      					 echo "<tr><td id='id:$id' class='cam_editable'>".$usuarios['n_usuario']."</td>";
+      					 echo "<td id='cedula:$id' class='cam_editable' contenteditable='true'>".$dato['dni']."</td>";
+    				     echo "<td id='nombre:$id' class='cam_editable' contenteditable='true'>".$dato['nombre']."</td>";
+      					 echo "<td id='apellido:$id' class='cam_editable' contenteditable='true'>".$dato['apellido']."</td>";
+      					 echo "<td id='apellido2:$id' class='cam_editable' contenteditable='true'>".$dato['apellido2']."</td>";
+      					 //////////////////////////////////////
+      					 echo "<td id='direccion:$id' class='cam_editable' contenteditable='true'>".$dato['direccion']."</td>";
+      					 echo "<td id='correo:$id' class='cam_editable' contenteditable='true'>".$dato['correo']."</td>";
+      					 echo "<td id='telefono:$id' class='cam_editable' contenteditable='true'>".$dato['telefono']."</td>";
+      					 echo "<td id='fecha:$id' class='cam_editable' contenteditable='true'>".$dato['fecha']."</td>";
+      					 echo "<td id='sexo:$id' class='cam_editable' contenteditable='true'>".$dato['sexo']."</td>";
+      					 ///////////////////////////////////////	 
+                 if($_SESSION["rol"] == ROL_ADMIN){
+    				      echo"<td id='$id' button='true'><button type='button' class='btn btn-danger'><span class='glyphicon glyphicon-minus'></span> Eliminar</button></td>";
+                 }
+      					 echo"</tr>";
 					 }				
 				?>
 			</tbody>	
@@ -82,71 +86,75 @@
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               <h4 class="modal-title">Nuevo Alumno</h4>
             </div>
-            <form role="form"  id= "frmpaciente" name="frmpaciente" onsubmit="Registrarpaciente(); return false">
+            <form role="form"  id= "frmalumno" name="frmalumno" onsubmit="Registraralumno(); return false">
               <div class="col-lg-12">               
 
+                <div id="instructionBox">* Campo obligatorio</div>
                 <div class="form-group">
-                  <label>Nombre de usuario</label>
+                  <label>* Nombre de usuario</label>
                   <input  name="nombreusuario" class="form-control" required>
                 </div>
                 
-                 <div class="form-group">
-                  <label>Dni</label>
-                  <input  name="dni" class="form-control" required>
-                </div>
-                 
                 <div class="form-group">
-                  <label>Nombre</label>
+                  <label>* Nombre</label>
                   <input  name="nombre" class="form-control" required>
                 </div>
                  
                 <div class="form-group">
-                  <label>Primer Apellido</label>
+                  <label>* Primer Apellido</label>
                   <input  name="apellido" class="form-control" required>
                 </div>
-				
-				<div class="form-group">
-                  <label>Segundo Apellido</label>
+        
+                <div class="form-group">
+                  <label>* Segundo Apellido</label>
                   <input  name="apellido2" class="form-control" required>
                 </div>
-                                
+                  
+                <div class="form-group">
+                  <label>Dni</label>
+                  <input  name="dni" class="form-control">
+                </div>
+
                 <div class="form-group">
                   <label>Direccion</label>
-                  <input  name="direccion"  class="form-control" required>
+                  <input  name="direccion"  class="form-control">
                 </div>
                  
                  <div class="form-group">
                   <label>Correo</label>
-                  <input  name="correo" type="email"  class="form-control" required>
+                  <input name="correo" type="email"  class="form-control">
                 </div>
                 
                  <div class="form-group">
-                  <label>Telefono</label>
-                  <input  name="telefono" type="number"  class="form-control" required>
+                  <label>Teléfono</label>
+                  <input name="telefono" type="text" placeholder="+34999999999" class="form-control" pattern="([+]\d{2})?\d{9}">
                 </div>
                  
                 <div class="form-group">
-                  <label>Fecha de nacimiento</label>
-                  <input  name="fecha" type="date"  class="form-control" required>
+                  <label>* Fecha de nacimiento</label>
+                  <input  name="fecha" type="date" class="form-control" required>
+
                 </div>
                  
-                 <div class="form-group">
+                <div class="form-group">
                   <label>Sexo</label>
-                  <select name='sexo' class='form-control'>
-					  <option value="Femenino">Femenino</option>
-					  <option value="Masculino">Masculino</option>					  
-				  </select>
-                 </div>
-                               
+                  <br>
+                  <div class="sexoFormElement">
+                   <input name='sexo' type="radio" value="Hombre" class="form-control">  <span>Hombre</span>
+                  </div>
+                  <div class="sexoFormElement">
+                   <input name='sexo' type="radio" value="Mujer" class="form-control"> <span>Mujer</span>       
+                  </div>
+                </div>
 
                 <div class="form-group">
-                  <label>password</label>
+                  <label>* Contraseña</label>
                   <input  name="password" id="p1" type="password" class="form-control" required>
                 </div>
                 
                 <div class="form-group">
-                  <label>repita password</label>
-                  <input  name="password2" id="p2" type="password" class="form-control" required>
+                  <label>* Repita contraseña</label>
+                  <input name="password2" id="p2" type="password" class="form-control" required>
                 </div>                         
                 
                 <button type="submit" class="btn btn-primary btn-lg" button='agregar'>
