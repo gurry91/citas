@@ -176,6 +176,10 @@ function eventoClickDia(){
 }
 
 function clickDiaHandler(){
+	
+	$("#calendarTable td.btn-success").removeClass("btn-success").addClass("btn-primary"); //Resetea el día previo seleccionado, si lo hubiera
+	$(this).addClass("btn-success"); //Cambia el color del día seleccionado
+
 	cargaHoras($(this).text());
 }
 
@@ -249,6 +253,10 @@ function resetHorario(){
 
 function eventoClickHora(){
 	$("#hoursTable td.btn").click(function (){
+		
+		$("#hoursTable td.btn-success").removeClass("btn-success").addClass("btn-primary");
+		$(this).addClass("btn-success");
+
 		horarioSeleccionado = $(this).attr("data-id");
 		$("#btnCita").removeAttr("disabled");
 	});	
