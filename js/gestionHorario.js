@@ -30,11 +30,13 @@ function clickDiaHandler(){
 function btnMostrarHorasHandler(){
 	if(validaForm()){
 		calculaHoras();
+		registraEventoBotonesHora();
 	}
 }
 
 function btnGuardarHandler(){
 	registraHoras();
+	deshabilitaBotonGuardar();
 }
 
 function validaForm(){
@@ -43,7 +45,10 @@ function validaForm(){
 
 	if(horaInicio >= horaFin){
 		pintaErrorValidacion("La hora de fin debe ser mayor que la hora de inicio");
+		return false;
 	}
+
+	return true;
 }
 
 function calculaHoras(){
@@ -51,9 +56,15 @@ function calculaHoras(){
 	var horaFin = $("#formIntervalo #horaFin").val();
 	var intervaloMinutos = $("#formIntervalo #intervalo").val();
 
+	if(!intervaloMinutos){
+		return;
+	}
+
+	intervaloMinutos = Number(intervaloMinutos);
+
 	// Separa horas y minutos en un array
-	var horaMinutoInicio = horaInicio.split(); 
-	var horaMinutoFin = horaFin.split();
+	var horaMinutoInicio = horaInicio.split(":"); 
+	var horaMinutoFin = horaFin.split(":");
 
 	//Preparamos 1 objeto de fecha con la hora de inicio para que la API se encargue de establecer correctamente las horas y los minutos cuando vayamos iterando sobre tramos
 	var fechaInicial = new Date();
@@ -70,24 +81,36 @@ function calculaHoras(){
 	var numeroTramosHorario = minutosDiferencia / intervaloMinutos + esUltimoTramoIncompleto;
 
 	var contadorMinutosProcesados = 0;
-	var tramosHorario = new Array();
+	var tramosHorarios = new Array();
 	
 	//Crea un listado de tramos con las horas de inicio y fin de cada tramo [[hora inicio, hora fin], [hora inicio, hora fin], [hora inicio, hora fin]]
 	while(contadorMinutosProcesados < minutosDiferencia){
-		var horaInicialTramo = fechaInicial.getHours() + ":" fechaInicial.getMinutes();
-		fechaInicial.setMinutes(fechaInicial.getMinutes() + intervalo); //Actualiza la hora para el siguente tramo
-		var horaFinalTramo = fechaInicial.getHours() + ":" fechaInicial.getMinutes();
+		var horaInicialTramo = fechaInicial.getHours() + ":" + fechaInicial.getMinutes();
+		fechaInicial.setMinutes(fechaInicial.getMinutes() + intervaloMinutos); //Actualiza la hora para el siguente tramo
+		var horaFinalTramo = fechaInicial.getHours() + ":" + fechaInicial.getMinutes();
 
-		tramosHorario.push([horaInicialTramo, horaFinalTramo]); 
-		contadorMinutosProcesados+=intervalo;
+		tramosHorarios.push([normalizaHora(horaInicialTramo), normalizaHora(horaFinalTramo)]); 
+		contadorMinutosProcesados+=intervaloMinutos;
 	}
 
 	//En el caso de que el ultimo tramo sea incompleto se actualiza el valor obtenido del calulo anterior por la hora final insertada por el usuario
 	if(esUltimoTramoIncompleto){
-		tramosHorario[tramosHorario.length - 1][1] = horaFin; //en el indice 1 es donde se guarda la hora de fin [[hora inicio, hora fin]]
+		tramosHorarios[tramosHorarios.length - 1][1] = horaFin; //en el indice 1 es donde se guarda la hora de fin [[hora inicio, hora fin]]
 	}
 
-	pintarHoras(tramosHorario);
+	pintarHoras(tramosHorarios);
+}
+
+function normalizaHora(hora){
+	var horaMinuto = hora.split(":");
+
+	var hora = horaMinuto[0] + "";
+	hora = (hora.length >= 2 ? hora : "0"+hora);
+
+	var minutos = horaMinuto[1] + "";
+	minutos = (minutos.length >= 2 ? minutos : "0"+ minutos);
+
+	return hora + ":" + minutos;
 }
 
 function getDiferenciaMinutos(fechaInicio, fechaFin){
@@ -101,8 +124,9 @@ function getDiferenciaMinutos(fechaInicio, fechaFin){
 }
 
 function registraHoras(){
-	$datos = "profesor=" + "<?php echo $_SESSION['usuario']?>" + "&dia=" + diaSemanaSeleccionado + "&horas=" + JSON.stringify(horasSeleccionadas);
-	$.post("php/horarioRouter.php?accion=registraHorario", $datos, function(resultado){
+	var datos = "dia=" + diaSemanaSeleccionado + "&horas=" + JSON.stringify(horasSeleccionadas);
+
+	$.post("php/horarioRouter.php?accion=registraHorario", datos, function(resultado){
 		if(resultado == 'true'){
 			alert("Horas guardadas correctamente");
 		}else{
@@ -114,12 +138,12 @@ function registraHoras(){
 
 function clickHoraHandler(){
 	agregaHora($(this).text(), $(this).attr("data-fin"));
+	$(this).removeClass("btn-primary").addClass("btn-success").unbind('click');
+	habilitaBotonGuardar();
 }
 
 function agregaHora(horaInicio, horaFin){
 	horasSeleccionadas.push([horaInicio, horaFin]);
-
-	console.log(horasSeleccionadas);
 }
 
 function remarcaDiaSeleccionado(diaButton){
@@ -130,19 +154,19 @@ function remarcaDiaSeleccionado(diaButton){
 function pintarHoras(horas){
 	resetHoras();
 	var HORA_INICIO_INDEX = 0;
-	var HORA_FIN_INDEX = 0;
+	var HORA_FIN_INDEX = 1;
 
 	var tablaHoras = $("#hoursTable tbody");
-	var horasPintadas = 0;
+	var horasPintadas = 0;
 	var hora;
 	var fila;
 	
 	do{
-		var horaInicioTramo = horas[horasPintadas][HORA_INICIO_INDEX];
-		var horaFinTramo = horas[horasPintadas][HORA_FIN_INDEX];
+		var horaInicioTramo = horas[horasPintadas][HORA_INICIO_INDEX];
+		var horaFinTramo = horas[horasPintadas][HORA_FIN_INDEX];
 
-		// En el caso que se pase a otra hora se crea una nueva fila con un indicador de la hora que corresponde a esa fila
-		var horaInicioSeparada = horaInicioTramo.split()[0];
+		// En el caso que se pase a otra hora se crea una nueva fila con un indicador de la hora que corresponde a esa fila
+		var horaInicioSeparada = horaInicioTramo.split(":")[0];
 		if(!hora || hora != horaInicioSeparada){
 			hora = horaInicioSeparada;
 			fila = $("<tr />").append($("<th />").text(horaInicioSeparada));
@@ -162,14 +186,19 @@ function resetHoras(){
 	horasSeleccionadas = new Array();
 	$("#hoursTable tbody").empty();
 	$("#hoursTable").addClass("hidden");
+	deshabilitaBotonGuardar();
 }
 
 function habilitaFormulario(){
 	$("#formIntervalo fieldset").removeAttr("disabled");
 }
 
-function deshabilitaFormulario(){
-	$("#formIntervalo fieldset").attr("disabled", true);
+function deshabilitaBotonGuardar(){
+	$("#formIntervalo #btnGuardar").addClass("disabled");
+}
+
+function habilitaBotonGuardar(){
+	$("#formIntervalo #btnGuardar").removeClass("disabled");
 }
 
 function pintaErrorValidacion(mensaje){

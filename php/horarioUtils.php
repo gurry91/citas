@@ -3,19 +3,21 @@
 	include_once $_SERVER['DOCUMENT_ROOT'] . '/citas/php/credenciales.php';
 
 	function registraHorario($profesor, $dia, $horas){
-		const HORA_INICIO_INDEX = 0;
-		const HORA_FIN_INDEX = 1;
 
+		$HORA_INICIO_INDEX = 0;
+		$HORA_FIN_INDEX = 1;
+		
+		borraHorario($profesor, $dia); //Borra los horarios previos que tuviera ese día
 		$conexion = getDBConexion();
 
-		$sql = "INSERT INTO horarios (id_profesor, hora_inicio, hora_fin, dia) VALUES ";
+		$sql = "INSERT INTO horarios (profesor, hora_inicio, hora_fin, dia) VALUES ";
 
 		$horasSql = array();
 		
 		foreach ($horas as $hora) {
 			
-			$horaInicio = $horas[$hora][HORA_INICIO_INDEX];
-			$horaFin = $horas[$hora][HORA_FIN_INDEX];
+			$horaInicio = $hora[$HORA_INICIO_INDEX];
+			$horaFin = $hora[$HORA_FIN_INDEX];
 
 			array_push($horasSql, sprintf("(%d,'%s','%s', %d)", $profesor, $horaInicio, $horaFin, $dia));
 		}
@@ -26,6 +28,15 @@
 		closeConexion($conexion);
 
 		return true;
+	}
+
+	function borraHorario($profesor, $dia){
+		$conexion = getDBConexion();
+
+		$sql = sprintf("DELETE FROM horarios WHERE profesor = %d AND dia = %d",$profesor, $dia);
+
+		mysqli_query($conexion,$sql) or die(mysqli_error($conexion));
+		closeConexion($conexion);
 	}
 
 	function getDBConexion() {

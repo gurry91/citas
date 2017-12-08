@@ -64,18 +64,6 @@
     <table id="hoursTable" class="table-condensed table-bordered hidden">
         <caption>Selecciona las horas deseadas: </caption>
           <tbody>
-              <tr>
-                <th>7</td>
-                <td class="btn btn-primary">7:20</td>
-                <td class="btn btn-primary">7:20</td>
-                <td class="btn btn-primary">7:20</td>
-              </tr>
-              <tr>
-                <th>8</td>
-                <td class="btn btn-primary">7:20</td>
-                <td class="btn btn-primary">7:20</td>
-                <td class="btn btn-primary">7:20</td>
-              </tr>
           </tbody>
       </table>
   </div>
