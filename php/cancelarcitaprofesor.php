@@ -1,18 +1,14 @@
 <?php
+include_once $_SERVER['DOCUMENT_ROOT'] . '/citas/php/credenciales.php';
+
 if(!empty($_POST)){
-	$enlace=mysql_connect('localhost','root','entrar');
-	if (!$enlace){
-		die('no se pudo conectar: '.mysql_error());
-	}
-	mysql_select_db('citas');	
+	$enlace=mysqli_connect($servidor,$server_admin,$server_pass, $database) or die('no se pudo conectar: '.mysqli_error());
+
 	foreach($_POST as $field_name=>$val){
-		$field_id=strip_tags(trim($field_name));
-		$val=strip_tags(trim(mysql_real_escape_string($val)));
-		$split_data=explode(':',$field_id);
-		$field_name=$split_data[0];
-		if(!empty($field_name)&&!empty($val)){			
-			mysql_query("UPDATE datosusuario set cita='' where id_usuario='$val'") or mysql_error();
-			mysql_query("UPDATE horarios set alumno='' where id_horario='$field_name'") or mysql_error();
+		$field_id=strip_tags(trim($val));
+		if(!empty($val)){			
+			mysqli_query( $enlace, sprintf("DELETE FROM citas where id_cita='%d'",$val) or mysqli_error($enlace);
+			mysqli_close($enlace);
 			echo"true";
 		}else{
 			echo"false";

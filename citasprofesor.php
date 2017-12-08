@@ -22,34 +22,37 @@
 		<table class="table table-striped table-hover">
 			<thead>
 				<tr>
-					<th>ID</th>
-					<th>HORAS</th>
+					<th>FECHA</th>
+					<th>HORA INICIO</th>
+					<th>HORA FIN</th>
 					<th>Alumno</th>	
-					<th>Datos personales</th>				
 					<th>ACCION</th>				
 				</tr>
 			</thead>
 			<tbody>
 				<?php
 				     require('php/conexion.php');
-				     $user=$_SESSION['nombre'];
-				     $result=mysqli_query($conexion,"SELECT id_horario,horas,alumno FROM horarios where profesor='$user'");
-				     while ($horarios=mysqli_fetch_array($result)){	
-						  $id=$horarios['id_horario'];
-						  $alumno=$horarios['alumno'];
-						 echo "<tr><td id='id:$id' class='cam_editable'>".$horarios['id_horario']."</td>";
-						 echo "<td id='horas:$id' class='cam_editable'>".$horarios['horas']."</td>";				     
-						 echo "<td id='alumno:$id' class='cam_editable'>".$horarios['alumno']."</td>";
-//						 echo "<td id='profesor:$id' class='cam_editable'>".$horarios['doctor']."</td>";	
-						 if ($horarios['alumno']<>''){
-							 echo"<td id='$id' name='$alumno' button='false'><button type='button' class='btn btn-success'><span class='glyphicon glyphicon-eye-open'></span> Ver</button></td>";
-							 echo"<td id='$id' name='$alumno' button='true'><button type='button' class='btn btn-danger'><span class='glyphicon glyphicon-remove'></span> Cancelar Cita</button></td>";
-						 }else{
-							 echo"<td id='$id' name='$alumno' button='false'></td>";
-							 echo"<td id='$id' name='$alumno' button='true'></td>";
-						 }
+				     $user=$_SESSION['usuario'];
+
+				     $sql = "SELECT citas.id_cita, DATE_FORMAT(citas.fecha, '%d-%e-%Y') fecha, horarios.hora_inicio, horarios.hora_fin, CONCAT(usuarios.nombre, ' ', usuarios.apellido, ' ', usuarios.apellido2) alumno";
+				     $sql .= " FROM citas ";
+				     $sql .= " INNER JOIN usuarios ON (usuarios.id = citas.id_usuario) ";
+				     $sql .= " INNER JOIN horarios ON (horarios.id_horario = citas.id_horario) ";
+				     $sql .= sprintf(" WHERE horarios.profesor = %d", $user);
+				     $sql .= " ORDER BY citas.fecha DESC";
+				     
+				     error_log($sql);
+				     $result=mysqli_query($conexion,$sql) or die(mysqli_error($conexion));
+
+				     while ($citas= mysqli_fetch_array($result,MYSQL_ASSOC)){	
+						 $id=$citas['id_cita'];
+						 echo "<tr><td id='id:$id' class='cam_editable'>".$citas['fecha']."</td>";
+						 echo "<td id='hora_inicio:$id' class='cam_editable'>".$citas['hora_inicio']."</td>";				     
+						 echo "<td id='hora_fin:$id' class='cam_editable'>".$citas['hora_fin']."</td>";
+						 echo "<td id='alumno:$id' class='cam_editable'>".$citas['alumno']."</td>";
+						 echo"<td id='$id' button='true'><button type='button' class='btn btn-danger'><span class='glyphicon glyphicon-minus'></span> Eliminar</button></td>";
 						 echo"</tr>";
-							 }
+					 }
 				?>
 			</tbody>	
 					
