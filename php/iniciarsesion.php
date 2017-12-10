@@ -6,7 +6,8 @@ if(!empty($_POST)){
 	$conexion=(mysqli_connect("$servidor","$server_admin","$server_pass"));
     mysqli_select_db($conexion,$database) or die ("no se encuentra la bd");	
 	$user=$_POST['usuario'];
-	$pass=$_POST["password"];
+	$pass=md5($_POST["password"]);
+
 	$sql="SELECT usuarios.id,usuarios.nombre, usuarios.password, roles.descripcion rol FROM usuarios
 	INNER JOIN roles ON (roles.id = usuarios.rol) WHERE usuarios.n_usuario='$user'";
 
@@ -21,7 +22,7 @@ if(!empty($_POST)){
 		}else{
 			session_destroy();
 			mysqli_close($conexion);
-			echo "contraseña incorrecta";
+			echo "Contraseña incorrecta";
 		}
 		
 	}else{

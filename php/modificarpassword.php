@@ -4,8 +4,8 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/citas/php/credenciales.php';
 if(!empty($_POST)){
 	session_start();
 	$conexion=mysqli_connect($servidor,$server_admin,$server_pass, $database) or die ("no se encuentra la bd") ;
-	$vieja=$_POST['password0'];
-	$nueva=$_POST['password1'];
+	$vieja=md5($_POST['password0']);
+	$nueva=md5($_POST['password1']);	
     $usuario=$_SESSION['nombre'];
 	$sql="SELECT * FROM usuarios WHERE n_usuario='$usuario'";	
 	$consulta=mysqli_query($conexion,$sql)or die(mysqli_error());
@@ -21,7 +21,7 @@ if(!empty($_POST)){
 		}else{
 		//	echo "<script> alert('Contrase\u00f1a incorrecta') </script>";
 		//	error_log($_SERVER['HTTP_REFERER']);
-			echo "<script> alert($_SERVER['HTTP_REFERER']) </script>";	
+		//	echo "<script> alert($_SERVER['HTTP_REFERER']) </script>";	
 				
 			header( "Refresh:15; url=http://192.168.56.2/citas/frmprofesor.php", true, 303);
 			

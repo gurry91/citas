@@ -39,17 +39,17 @@
             <div class="form-row align-items-center">               
              
               <div class="form-group col-md-4">
-                <label for="horaInicio">Hora Inicio Citas</label>
+                <label for="horaInicio">Hora de Inicio de la Tutoría</label>
                 <input type="text" class="form-control mb-2" id="horaInicio" placeholder="HH:mm" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" required>
               </div>
 
               <div class="form-group col-md-4">
-                <label for="horaFin">Hora Fin Citas</label>
+                <label for="horaFin">Hora de Fin de la tutoría</label>
                 <input type="text" class="form-control mb-2" id="horaFin" placeholder="HH:mm" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" required>
               </div>
 
               <div class="form-group col-md-4">
-                <label for="intervalo">Intervalo (minutos)</label>
+                <label for="intervalo">Tramo de sesión (minutos)</label>
                 <input type="number" class="form-control mb-2" id="intervalo" max="60" required>
               </div>
               

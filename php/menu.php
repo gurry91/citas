@@ -25,7 +25,8 @@
 				</div>		
 				<div class="collapse navbar-collapse" id="miMenu">
 					<ul class="nav navbar-nav">
-						<li><a href="horarios.php">Horarios</a></li>	
+						<li><a href="horarios.php">Pedir cita</a></li>	
+						<li><a href="citasalumno.php">Mis Citas</a></li>	
 						<li><a href="datospersonales.php">Datos personales</a></li>
 						<li><a onclick="cambiar();" href="#">Cambiar contraseña</a></li>
 						<li><a href="php/cerrarsesion.php"><span class="label label-danger">CERRAR SESION </span></a></li>								
@@ -56,7 +57,7 @@
 				</div>		
 				<div class="collapse navbar-collapse" id="miMenu">
 					<ul class="nav navbar-nav">						
-						<li><a href="citasprofesor.php">Citas</a></li>
+						<li><a href="citasprofesor.php">Mis citas</a></li>
 						<li><a href="gestionHorario.php">Gestión Horario</a></li>
 						<li><a href="alumnos.php">Alumnos</a></li>	
 						<li><a href="datospersonales.php">Datos personales</a></li>
@@ -88,10 +89,8 @@
 				</div>		
 				<div class="collapse navbar-collapse" id="miMenu">
 					<ul class="nav navbar-nav">
-						<li><a href="administradores.php">Administradores</a></li>
-						<li><a href="profesores.php">Profesor</a></li>					
-						<li><a href="alumnos.php">Alumnos</a></li>	
-						<li><a href="citas.php">Citas</a></li>										
+						<li><a href="profesores.php">Profesores</a></li>					
+						<li><a href="alumnos.php">Alumnos</a></li>										
 						<li><a onclick="cambiar();" href="#">Cambiar contraseña</a></li>
 						<li><a href="php/cerrarsesion.php"><span class="label label-danger">CERRAR SESION </span></a></li>										
 					</ul>

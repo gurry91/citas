@@ -1,12 +1,11 @@
 <?php
   include_once $_SERVER['DOCUMENT_ROOT'] . '/citas/php/controlAcceso.php';
-
-<!DOCTYPE html>
-  setRolPermitido(ROL_PROFESOR);
+  
   setRolPermitido(ROL_ADMIN);
+  setRolPermitido(ROL_PROFESOR);
   compruebaPermisos();
 ?>
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -16,57 +15,33 @@
 </head>
 <body>
    <div class="container">
-    <?php include $_SERVER["DOCUMENT_ROOT"] . "/citas/php/menu.php" ?>
+	<?php include $_SERVER["DOCUMENT_ROOT"] . "/citas/php/menu.php" ?>
 </div>
-
 <div class="container">
 <div class="panel panel-default">
     <div class="panel-heading">LISTA DE ALUMNOS</div>
 	<div class="table-responsive">
 		<table class="table table-striped table-hover">
 			<thead>
-				<tr>
-					<th>NOMBRE DE USUARIO</th>
-					<th>DNI</th>	
+				<tr>					
 					<th>NOMBRE</th>	
-					<th>APELLIDOS</th>	
-					<th></th>	
-					<th>DIRECCION</th>	
-					<th>CORREO</th>	
-					<th>TELEFONO</th>	
-					<th>FECHA DE NACIMIENTO</th>	
-					<th>SEXO</th>	
-          <?php  if($_SESSION["rol"] == ROL_ADMIN){ ?>	
-					 <th>ACCIONES</th>				
-          <?php } ?>
+          <th>APELLIDOS</th>  		
+          <th>ACCIONES</th>   
 				</tr>
 			</thead>
 			<tbody>
 				<?php
 				     require('php/conexion.php');
-				     $result=mysqli_query($conexion,sprintf('SELECT n_usuario FROM usuarios INNER JOIN roles ON (roles.id = usuarios.rol) where roles.descripcion ="%s"', ROL_ALUMNO));				    
+				     $result=mysqli_query($conexion,sprintf('SELECT n_usuario, nombre, apellido, apellido2 FROM usuarios INNER JOIN roles ON (roles.id = usuarios.rol) where roles.descripcion = "%s"', ROL_ALUMNO));
+
 				     while ($usuarios=mysqli_fetch_array($result)){
-    						 $id=$usuarios['n_usuario'];
-      					 //////////////////////////////////////
-      					 $result2=mysqli_query($conexion,"SELECT * FROM usuarios where n_usuario='$id'");
-      					 $dato=mysqli_fetch_array($result2);
-      					 //////////////////////////////////////
-      					 echo "<tr><td id='id:$id' class='cam_editable'>".$usuarios['n_usuario']."</td>";
-      					 echo "<td id='cedula:$id' class='cam_editable' contenteditable='true'>".$dato['dni']."</td>";
-    				     echo "<td id='nombre:$id' class='cam_editable' contenteditable='true'>".$dato['nombre']."</td>";
-      					 echo "<td id='apellido:$id' class='cam_editable' contenteditable='true'>".$dato['apellido']."</td>";
-      					 echo "<td id='apellido2:$id' class='cam_editable' contenteditable='true'>".$dato['apellido2']."</td>";
-      					 //////////////////////////////////////
-      					 echo "<td id='direccion:$id' class='cam_editable' contenteditable='true'>".$dato['direccion']."</td>";
-      					 echo "<td id='correo:$id' class='cam_editable' contenteditable='true'>".$dato['correo']."</td>";
-      					 echo "<td id='telefono:$id' class='cam_editable' contenteditable='true'>".$dato['telefono']."</td>";
-      					 echo "<td id='fecha:$id' class='cam_editable' contenteditable='true'>".$dato['fecha']."</td>";
-      					 echo "<td id='sexo:$id' class='cam_editable' contenteditable='true'>".$dato['sexo']."</td>";
-      					 ///////////////////////////////////////	 
-                 if($_SESSION["rol"] == ROL_ADMIN){
-    				      echo"<td id='$id' button='true'><button type='button' class='btn btn-danger'><span class='glyphicon glyphicon-minus'></span> Eliminar</button></td>";
-                 }
-      					 echo"</tr>";
+						 
+             $id=$usuarios['n_usuario'];			
+
+						 echo "<td id='nombre:$id' class='cam_editable'>".$usuarios['nombre']."</td>";	 
+             echo "<td id='apellido:$id' class='cam_editable'>".$usuarios['apellido'] . ' ' . $usuarios['apellido2']."</td>";
+             echo"<td id='$id' button='true'><button type='button' class='btn btn-danger'><span class='glyphicon glyphicon-minus'></span> Eliminar</button></td>";
+						 echo"</tr>";
 					 }				
 				?>
 			</tbody>	
@@ -79,7 +54,8 @@
           <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar
     </button>
 <!--//////////////////////////////////////////////////////////////////////////////////////////////////-->
-	<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true">
+	</div>
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -167,19 +143,18 @@
           </div>
         </div>
       </div>
-	
+
 <!--//////////////////////////////////////////////////-->
 <script src="js/jquery-2.2.3.min.js"></script>
-<script type="text/javascript" src="js/mainalumno.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script type="text/javascript">
-	
         function ventananuevo(){
           $('#modal').modal('show');
 
         }
-</script>
+    </script>
 
-    <?php include $_SERVER["DOCUMENT_ROOT"] . "/citas/php/cambiarPassword.php" ?>
+<?php include $_SERVER["DOCUMENT_ROOT"] . "/citas/php/cambiarPassword.php" ?>
 <!--//////////////////////////////////////////////////////////////////////////////////////////////////-->
 </body>

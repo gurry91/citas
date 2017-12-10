@@ -15,7 +15,7 @@ if(!empty($_POST)){
 	$telefono=$_POST['telefono'];
 	$fecha=$_POST['fecha'];
 	$sexo=$_POST['sexo'];
-	$password=$_POST['password'];	
+	$password=md5($_POST['password']);	
 	$rol=ROL_ALUMNO;
 	$consultarusuario="SELECT 1 FROM usuarios where n_usuario='$nombreusuario'";
 	$resultadousuario=mysqli_query($conexion,$consultarusuario);	

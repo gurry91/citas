@@ -15,7 +15,7 @@ if(!empty($_POST)){
 	$telefono=$_POST['telefono'];
 	$fecha=$_POST['fecha'];
 	$sexo=$_POST['sexo'];
-	$password=$_POST['password'];	
+	$password=md5($_POST['password']);	
 	$rol=ROL_PROFESOR;
 	$consultarusuario="SELECT 1 FROM usuarios where n_usuario='$nombreusuario'";
 	$resultadousuario=mysqli_query($conexion,$consultarusuario);	
@@ -27,6 +27,7 @@ if(!empty($_POST)){
         mysqli_close($conexion);
 			
 		echo "Registro completado de manera correcta";
+		
 	}else if (!empty($busquedausuario)){
 		echo "El nombre de usuario ya existe";
 	}

@@ -59,9 +59,9 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title">Nuevo Alumno</h4>
+              <h4 class="modal-title">Nuevo Profesor</h4>
             </div>
-            <form role="form"  id= "frmprofesor" name="frmalumno" onsubmit="Registrarprofesor(); return false">
+            <form role="form"  id= "frmprofesor" name="frmprofesor" onsubmit="Registrarprofesor(); return false">
               <div class="col-lg-12">               
 
                 <div id="instructionBox">* Campo obligatorio</div>
