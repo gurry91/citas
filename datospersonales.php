@@ -32,8 +32,7 @@
 					<th>CORREO</th>	
 					<th>TELEFONO</th>	
 					<th>FECHA DE NACIMIENTO</th>	
-					<th>SEXO</th>		
-					<th>ACCIONES</th>				
+					<th>SEXO</th>					
 				</tr>
 			</thead>
 			<tbody>
@@ -62,7 +61,6 @@
 					 echo "<td id='sexo:$id' class='cam_editable' contenteditable='true'>".$dato['sexo']."</td>";
 					 echo "<td id='regimen subsidiario:$id' class='cam_editable' contenteditable='true'>".$dato['regimensubsidiario']."</td>"; 
 					 ///////////////////////////////////////	 
-				     echo"<td id='$id' button='true'><button type='button' class='btn btn-danger'><span class='glyphicon glyphicon-minus'></span> Eliminar</button></td>";
 					 echo"</tr>";
 					 }				
 				?>			

@@ -17,7 +17,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a href="frmalumno.php" class="navbar-brand">Bienvenido usuario
+					<a href="frmalumno.php" class="navbar-brand"> Logueado como
 					<?php
 						echo $_SESSION['nombre'];
 						?>
@@ -48,7 +48,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a href="frmprofesor.php" class="navbar-brand">Bienvenido Profesor/a
+					<a href="frmprofesor.php" class="navbar-brand"> Logueado como
 					<?php
 						echo $_SESSION['nombre'];
 						?>
@@ -81,7 +81,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a href="frmadmin.php" class="navbar-brand">Bienvenido Administrador
+					<a href="frmadmin.php" class="navbar-brand"> Logueado como
 					<?php
 						echo $_SESSION['nombre'];
 						?>

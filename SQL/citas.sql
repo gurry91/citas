@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 08-12-2017 a las 11:59:57
+-- Tiempo de generación: 10-12-2017 a las 00:51:56
 -- Versión del servidor: 5.5.57-0ubuntu0.14.04.1
 -- Versión de PHP: 5.5.9-1ubuntu4.22
 
@@ -26,10 +26,13 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `citas`
 --
 
-CREATE TABLE IF NOT EXISTS `citas` ( 
+CREATE TABLE IF NOT EXISTS `citas` (
+
+  `id_cita` int(11) NOT NULL,
   `id_horario` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
   `fecha` date NOT NULL,
+  
   PRIMARY KEY (`id_horario`,`fecha`),
   KEY `id_usuario` (`id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -38,10 +41,10 @@ CREATE TABLE IF NOT EXISTS `citas` (
 -- Volcado de datos para la tabla `citas`
 --
 
-INSERT INTO `citas` (`id_usuario`, `id_horario`, `fecha`) VALUES
-(2, 36, '2017-12-13'),
-(2, 37, '2017-12-13'),
-(2, 37, '2017-12-20');
+INSERT INTO `citas` (`id_horario`, `id_usuario`, `fecha`, `id_cita`) VALUES
+(36, 2, '2017-12-13', 0),
+(37, 2, '2017-12-13', 0),
+(37, 2, '2017-12-20', 0);
 
 -- --------------------------------------------------------
 
@@ -57,8 +60,8 @@ CREATE TABLE IF NOT EXISTS `horarios` (
   `dia` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Día de la semana en numerico [1-7]',
   `id_usuario` int(11) NOT NULL,
   PRIMARY KEY (`id_horario`),
-  KEY `id_usuario` (`id_usuario`))
-  ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
+  KEY `id_usuario` (`id_usuario`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=5 ;
 
 --
 -- Volcado de datos para la tabla `horarios`
@@ -99,7 +102,7 @@ INSERT INTO `roles` (`id`, `descripcion`) VALUES
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `n_usuario` varchar(30) COLLATE utf8_bin NOT NULL COMMENT 'nombre de usuario',
-  `password` varchar(30) COLLATE utf8_bin NOT NULL,
+  `password` varchar(60) COLLATE utf8_bin NOT NULL,
   `rol` int(11) NOT NULL,
   `nombre` varchar(30) COLLATE utf8_bin NOT NULL,
   `apellido` varchar(30) COLLATE utf8_bin NOT NULL,
@@ -121,11 +124,11 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `n_usuario`, `password`, `rol`, `nombre`, `apellido`, `apellido2`, `correo`, `direccion`, `fecha`, `dni`, `sexo`, `telefono`) VALUES
-(1, 'root', 'hola', 1, 'Admin', 'Admin', 'Admin', 'admin@gmail.com', 'C/ Cervantes, 3, Ecija, Sevilla', '1991-03-03', '123456789G', 'Masculino', '666777888'),
-(2, 'Salvory', 'entrar', 3, 'Salvador', 'Reyes', 'Morales', 's@hotmail.com', 'Almeria 9', '1992-01-07', '15456392R', 'Hombre', ''),
-(4, 'Juan', 'entrar', 2, 'Juan', 'Farfan', 'noseque', 'juan@iesluisvelez.', 'Ecija 4', '2017-12-13', '1545321587', 'hombre', '648751874'),
-(5, 'ivan', 'entrar', 3, 'Ivan', 'Ivan', 'Ivan', 'imp3@gmail.com', NULL, '0000-00-00', NULL, NULL, NULL),
-(7, 'Fran', 'entrar', 3, 'Fran', 'Santiago', 'Lopez', 'asdfasf@gmail', 'asdfafd', '2017-12-14', '16461891', 'Mujer', '664818487');
+(1, 'root', 'b2eccf65385e0138e26ae97e89e88a0c', 1, 'Admin', 'Admin', 'Admin', 'admin@gmail.com', 'C/ Girasol, 3, Fuente Palmera, cordoba', '1992-10-10', '123456789G', 'Masculino', '666777888'),
+(2, 'Salvory', 'b2eccf65385e0138e26ae97e89e88a0c', 3, 'Salvador', 'Reyes', 'Morales', 's@hotmail.com', 'Almeria 9', '1992-01-07', '15456392R', 'Hombre', ''),
+(3, 'Juan', 'b2eccf65385e0138e26ae97e89e88a0c', 2, 'Juan', 'Farfan', 'Espuny', 'juan@iesluisvelez.', 'Ecija 4', '2017-12-13', '1545321587', 'hombre', '648751874'),
+(4, 'ivan', 'b2eccf65385e0138e26ae97e89e88a0c', 3, 'Ivan', 'Ivan', 'Ivan', 'imp3@gmail.com', NULL, '0000-00-00', NULL, NULL, NULL),
+(5, 'Fran', 'b2eccf65385e0138e26ae97e89e88a0c', 3, 'Fran', 'Santiago', 'Lopez', 'asdfasf@gmail', 'asdfafd', '2017-12-14', '16461891', 'Mujer', '664818487');
 
 --
 -- Restricciones para tablas volcadas
